@@ -1,0 +1,317 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-light: #e0e7ff;
+  --bg-color: #f8fafc;
+  --card-bg: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --border-hover: #cbd5e1;
+  
+  /* Soft elegant pastel variants for mood boxes and accents */
+  --mood-yellow-bg: #fefcf0;
+  --mood-yellow-border: #fef08a;
+  --mood-pink-bg: #fff1f2;
+  --mood-pink-border: #fecdd3;
+  --mood-blue-bg: #f0f9ff;
+  --mood-blue-border: #bae6fd;
+  --mood-green-bg: #f0fdf4;
+  --mood-green-border: #bbf7d0;
+  --mood-purple-bg: #faf5ff;
+  --mood-purple-border: #e9d5ff;
+  --mood-orange-bg: #fff7ed;
+  --mood-orange-border: #fed7aa;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  line-height: 1.5;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Sticky sidebar panel container */
+.sticky-sidebar {
+  position: sticky;
+  top: 24px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  scrollbar-width: none; /* Hide scrollbar for sidebars */
+}
+.sticky-sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Modern Card Utilities */
+.cartoon-box {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cartoon-box-yellow { background-color: var(--mood-yellow-bg); border-color: var(--mood-yellow-border); }
+.cartoon-box-pink { background-color: var(--mood-pink-bg); border-color: var(--mood-pink-border); }
+.cartoon-box-blue { background-color: var(--mood-blue-bg); border-color: var(--mood-blue-border); }
+.cartoon-box-green { background-color: var(--mood-green-bg); border-color: var(--mood-green-border); }
+.cartoon-box-purple { background-color: var(--mood-purple-bg); border-color: var(--mood-purple-border); }
+.cartoon-box-orange { background-color: var(--mood-orange-bg); border-color: var(--mood-orange-border); }
+
+/* Circular Avatars */
+.avatar-circle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: #f1f5f9;
+  border: 1px solid var(--border-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  flex-shrink: 0;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+}
+
+.avatar-circle-sm {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #f1f5f9;
+  border: 1px solid var(--border-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+/* Modern Button Utilities */
+.cartoon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  user-select: none;
+  padding: 8px 16px;
+}
+
+.cartoon-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+}
+
+.cartoon-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Button colors */
+.btn-yellow { background-color: #fef08a; color: #854d0e; border-color: #fef08a; }
+.btn-yellow:hover { background-color: #fde047; }
+
+.btn-pink { background-color: #f43f5e; color: #ffffff; border-color: #f43f5e; }
+.btn-pink:hover { background-color: #e11d48; }
+
+.btn-blue { background-color: var(--primary); color: #ffffff; border-color: var(--primary); }
+.btn-blue:hover { background-color: var(--primary-hover); }
+
+.btn-green { background-color: #10b981; color: #ffffff; border-color: #10b981; }
+.btn-green:hover { background-color: #059669; }
+
+.btn-purple { background-color: #8b5cf6; color: #ffffff; border-color: #8b5cf6; }
+.btn-purple:hover { background-color: #7c3aed; }
+
+.btn-orange { background-color: #f97316; color: #ffffff; border-color: #f97316; }
+.btn-orange:hover { background-color: #ea580c; }
+
+.btn-white { background-color: #ffffff; color: var(--text-main); border-color: var(--border-color); }
+.btn-white:hover { background-color: #f8fafc; border-color: var(--border-hover); }
+
+/* Social Media Reaction Button Styles */
+.social-react-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 9999px;
+}
+.social-react-btn:hover {
+  background-color: #f1f5f9;
+}
+.social-react-btn:active {
+  transform: scale(0.95);
+}
+
+.react-hugs:hover {
+  color: #e11d48;
+  background-color: #fff1f2;
+}
+.react-same:hover {
+  color: #059669;
+  background-color: #f0fdf4;
+}
+.react-support:hover {
+  color: #2563eb;
+  background-color: #eff6ff;
+}
+
+.react-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  opacity: 0.95;
+}
+
+/* Inputs */
+.cartoon-input {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: inherit;
+  font-weight: 500;
+  color: var(--text-main);
+  outline: none;
+  box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.15s ease;
+  background-color: #ffffff;
+}
+
+.cartoon-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  0% { transform: translateY(8px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes floatSubtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.animate-float {
+  animation: floatSubtle 4s ease-in-out infinite;
+}
+
+.animate-bounce-slow {
+  animation: floatSubtle 3s ease-in-out infinite;
+}
+
+.animate-pop {
+  animation: fadeInUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Interactive Checkbox styling */
+.cartoon-checkbox {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #ffffff;
+  transition: all 0.15s ease;
+}
+
+.cartoon-checkbox::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  transition: all 0.15s ease;
+}
+
+.cartoon-checkbox.checked {
+  background-color: #10b981;
+  border-color: #10b981;
+}
+
+.cartoon-checkbox.checked::after {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Speech Bubble styling */
+.speech-bubble {
+  position: relative;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 10px 14px;
+  max-width: 85%;
+  display: inline-block;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.speech-bubble-left {
+  background-color: #f1f5f9;
+  border-color: #f1f5f9;
+  color: var(--text-main);
+}
+
+.speech-bubble-right {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+}
+
+.speech-bubble-right p {
+  color: #ffffff !important;
+}
+
+/* Navigation items active styling */
+.nav-card {
+  transition: all 0.15s ease;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.nav-card:hover {
+  background-color: #f1f5f9;
+  color: var(--text-main);
+}
+.nav-card.active {
+  background-color: var(--primary-light);
+  color: var(--primary);
+}

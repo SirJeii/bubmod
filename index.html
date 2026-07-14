@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoodBubble 🎈 - Student Feelings Feed & Study Communities</title>
+  <!-- Tailwind CSS v3 CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cartoonYellow: '#fde047',  // Modern Flat Yellow 300
+            cartoonPink: '#f43f5e',    // Modern Flat Rose 500
+            cartoonBlue: '#38bdf8',    // Modern Flat Sky 400
+            cartoonGreen: '#10b981',   // Modern Flat Emerald 500
+            cartoonPurple: '#8b5cf6',  // Modern Flat Violet 500
+            cartoonOrange: '#f97316',  // Modern Flat Orange 500
+            cartoonDark: '#0f172a'     // Modern Flat Slate 900
+          },
+          boxShadow: {
+            cartoon: '0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05)',
+            'cartoon-btn': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+            'cartoon-btn-hover': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05)',
+            'cartoon-btn-active': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+            'cartoon-lg': '0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05)',
+            'cartoon-sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)'
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Custom stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen pb-20 md:pb-12 bg-[#f8fafc]">
+
+  <!-- MOBILE HEADER -->
+  <header class="flex md:hidden items-center justify-between px-4 py-3 bg-white border-b border-slate-100 sticky top-0 z-40">
+    <div class="flex items-center gap-2">
+      <span class="text-2xl animate-float">🎈</span>
+      <h1 class="text-xl font-extrabold text-slate-800">Mood<span class="text-indigo-600">Bubble</span></h1>
+    </div>
+    
+    <div class="flex items-center gap-3">
+      <!-- Database status indicator for mobile -->
+      <button id="db-status-btn-mobile" class="w-6 h-6 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-xs shadow-sm">
+        <span id="db-status-dot-mobile" class="w-2 h-2 rounded-full bg-yellow-400"></span>
+      </button>
+      
+      <!-- Mobile Profile button -->
+      <button id="mobile-profile-btn" class="w-8 h-8 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-base shadow-sm">
+        🦊
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN APP CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 mt-6 grid grid-cols-12 gap-6 items-start">
+    
+    <!-- LEFT SIDEBAR: LOGO + NAVIGATION + PROFILE (Col-span 3) -->
+    <aside class="col-span-12 md:col-span-3 sticky-sidebar hidden md:flex flex-col gap-6">
+      
+      <!-- LOGO HEADER -->
+      <div class="flex items-center gap-3 px-2">
+        <div class="text-3xl animate-float">🎈</div>
+        <div>
+          <h1 class="text-2xl font-extrabold tracking-tight text-slate-800 flex items-center gap-1.5 leading-none">
+            Mood<span class="text-indigo-600">Bubble</span>
+          </h1>
+          <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Student Diary & Hub</p>
+        </div>
+      </div>
+      
+      <!-- Navigation Menu -->
+      <div class="cartoon-box p-4 bg-white flex flex-col gap-2">
+        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2.5 px-1">🧭 Menu</h2>
+        
+        <button id="nav-feed" class="nav-card active w-full justify-start text-left gap-3 text-base">
+          <span>🎈</span>
+          <span class="font-bold">Public Diary</span>
+        </button>
+        
+        <button id="nav-communities" class="nav-card w-full justify-start text-left gap-3 text-base">
+          <span>🏫</span>
+          <span class="font-bold">Communities</span>
+        </button>
+      </div>
+
+      <!-- Current User Card Anchored in Left Sidebar -->
+      <div id="user-profile-widget" class="hidden cartoon-box bg-white p-3 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-2 overflow-hidden">
+          <span id="widget-avatar" class="avatar-circle-sm">🦊</span>
+          <div class="overflow-hidden leading-tight">
+            <span id="widget-nickname" class="font-bold text-slate-800 block truncate">Student</span>
+            <span id="widget-handle" class="text-[10px] text-slate-400 block truncate">@student</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <button id="change-profile-btn" class="text-xs text-indigo-600 hover:text-indigo-700 hover:underline font-bold">Edit</button>
+          <button id="logout-btn" class="text-xs text-rose-500 hover:text-rose-600 hover:underline font-bold">Exit</button>
+        </div>
+      </div>
+      
+    </aside>
+
+    <!-- CENTER PANEL: MAIN CONTENT (Col-span 6) -->
+    <section class="col-span-12 md:col-span-9 lg:col-span-6 flex flex-col gap-6">
+      
+      <!-- ================= SCREEN 1: FEELINGS FEED ================= -->
+      <div id="screen-feed" class="flex flex-col gap-6">
+        
+        <!-- Post Create Form Box (Social Media Compose Style) -->
+        <div class="cartoon-box p-4 bg-white border border-slate-200">
+          <div class="flex gap-3">
+            <!-- User Avatar Left -->
+            <span id="compose-avatar" class="avatar-circle">🦊</span>
+            
+            <!-- Compose Textarea Right -->
+            <div class="flex-1 flex flex-col">
+              <textarea id="post-textarea" placeholder="What's on your mind? Share your struggles or wins..." class="w-full h-20 resize-none text-sm text-slate-800 placeholder-slate-400 outline-none border-b border-slate-100 py-1.5 focus:border-indigo-100 transition-colors" maxlength="280"></textarea>
+              
+              <!-- Mood Selector underneath textarea -->
+              <div class="mt-3">
+                <span class="text-[10px] font-semibold text-slate-400 block mb-2">How are you feeling?</span>
+                <div class="grid grid-cols-5 gap-1.5">
+                  <button class="mood-option cartoon-btn btn-white py-2 gap-1 rounded-lg border border-slate-100 hover:border-slate-200 hover:bg-slate-50 flex flex-col items-center justify-center" data-mood="excited" data-emoji="🥳">
+                    <span class="text-lg">🥳</span>
+                    <span class="text-[9px] font-bold text-slate-500">Excited</span>
+                  </button>
+                  <button class="mood-option cartoon-btn btn-white py-2 gap-1 rounded-lg border border-slate-100 hover:border-slate-200 hover:bg-slate-50 flex flex-col items-center justify-center" data-mood="happy" data-emoji="😊">
+                    <span class="text-lg">😊</span>
+                    <span class="text-[9px] font-bold text-slate-500">Happy</span>
+                  </button>
+                  <button class="mood-option cartoon-btn btn-white py-2 gap-1 rounded-lg border border-slate-100 hover:border-slate-200 hover:bg-slate-50 flex flex-col items-center justify-center" data-mood="tired" data-emoji="🥱">
+                    <span class="text-lg">🥱</span>
+                    <span class="text-[9px] font-bold text-slate-500">Tired</span>
+                  </button>
+                  <button class="mood-option cartoon-btn btn-white py-2 gap-1 rounded-lg border border-slate-100 hover:border-slate-200 hover:bg-slate-50 flex flex-col items-center justify-center" data-mood="anxious" data-emoji="😰">
+                    <span class="text-lg">😰</span>
+                    <span class="text-[9px] font-bold text-slate-500">Anxious</span>
+                  </button>
+                  <button class="mood-option cartoon-btn btn-white py-2 gap-1 rounded-lg border border-slate-100 hover:border-slate-200 hover:bg-slate-50 flex flex-col items-center justify-center" data-mood="moody" data-emoji="😒">
+                    <span class="text-lg">😒</span>
+                    <span class="text-[9px] font-bold text-slate-500">Moody</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Character Counter & Post Trigger Button -->
+              <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-100">
+                <span id="char-counter" class="text-xs text-slate-400">0 / 280 characters</span>
+                <button id="submit-post-btn" class="cartoon-btn btn-blue px-4 py-1.5 text-xs gap-2 rounded-full">
+                  <span>Post</span>
+                  <span>🚀</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feed List Section -->
+        <div>
+          <div class="flex items-center justify-between mb-4 px-2">
+            <h2 class="text-base font-bold flex items-center gap-2 text-slate-800">
+              <span>🎈</span> Student Diary Feed
+            </h2>
+            <div class="text-[10px] font-semibold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">
+              Real-Time
+            </div>
+          </div>
+          
+          <!-- Feed Posts List -->
+          <div id="posts-container" class="flex flex-col gap-3">
+            <!-- Loading indicator -->
+            <div class="cartoon-box p-8 bg-white text-center">
+              <div class="text-2xl animate-spin mb-2 inline-block">🌀</div>
+              <p class="font-bold text-slate-400 text-sm">Loading timeline...</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ================= SCREEN 2: COMMUNITIES LIST ================= -->
+      <div id="screen-communities" class="hidden flex flex-col gap-6">
+        
+        <!-- Header & Action -->
+        <div class="flex items-center justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-bold flex items-center gap-2 text-slate-800">
+              <span>🏫</span> Communities
+            </h2>
+            <p class="text-xs text-slate-400">Join study boards, chat, and collaborate.</p>
+          </div>
+          <button id="open-create-community-btn" class="cartoon-btn btn-green px-3 py-1.5 text-xs gap-1.5">
+            <span>New Community</span>
+            <span>➕</span>
+          </button>
+        </div>
+
+        <!-- Community Grid -->
+        <div id="communities-grid" class="grid grid-cols-1 gap-4">
+          <!-- Loading indicator -->
+          <div class="cartoon-box p-8 bg-white text-center">
+            <div class="text-2xl animate-spin mb-2 inline-block">🌀</div>
+            <p class="font-bold text-slate-400 text-sm">Loading communities...</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ================= SCREEN 3: ACTIVE COMMUNITY (CHAT + TASKS) ================= -->
+      <div id="screen-active-community" class="hidden flex flex-col gap-4">
+        
+        <!-- Community Top Banner -->
+        <div id="community-header" class="cartoon-box p-4 bg-emerald-50/50 border border-emerald-100 flex justify-between items-center gap-4">
+          <div class="flex items-center gap-3 overflow-hidden">
+            <div id="active-comm-icon" class="text-2xl p-1.5 bg-white border border-slate-200 rounded-lg shrink-0">📐</div>
+            <div class="overflow-hidden">
+              <h2 id="active-comm-name" class="text-base font-bold text-slate-800 truncate">Math 101 Help</h2>
+              <p id="active-comm-desc" class="text-xs text-slate-500 truncate mt-0.5">Need help with calculus or homework problems?</p>
+            </div>
+          </div>
+          <button id="leave-community-btn" class="cartoon-btn btn-white px-2.5 py-1.5 text-xs gap-1.5 shrink-0">
+            <span>← Exit</span>
+          </button>
+        </div>
+
+        <!-- Columns layout: Chat and Tasks -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+          
+          <!-- Column 1: Group Chat (Col-span 7) -->
+          <div class="lg:col-span-7 cartoon-box p-4 bg-white flex flex-col h-[500px]">
+            <h3 class="text-sm font-bold border-b border-slate-100 pb-2 mb-3 flex items-center gap-2 text-slate-800">
+              <span>💬</span> Group Chat
+            </h3>
+            
+            <!-- Messages Scrollable Container -->
+            <div id="chat-messages-container" class="flex-1 overflow-y-auto pr-2 mb-4 flex flex-col gap-3">
+              <!-- Example chat items -->
+            </div>
+
+            <!-- Chat input bar -->
+            <div class="flex gap-2">
+              <input type="text" id="chat-input" placeholder="Type a message to the group..." class="cartoon-input flex-1 py-1.5 px-3 text-xs" />
+              <button id="send-chat-btn" class="cartoon-btn btn-blue px-3 py-1.5 text-xs gap-1">
+                <span>Send</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Column 2: Mission Board / Calendar (Col-span 5) -->
+          <div class="lg:col-span-5 flex flex-col gap-4">
+            
+            <!-- Tasks List Card -->
+            <div class="cartoon-box p-4 bg-white flex flex-col h-[280px]">
+              <h3 class="text-sm font-bold border-b border-slate-100 pb-2 mb-3 flex items-center gap-2 text-slate-800">
+                <span>🎯</span> Mission Board
+              </h3>
+              
+              <!-- Missions Scroll Area -->
+              <div id="missions-container" class="flex-1 overflow-y-auto pr-1 flex flex-col gap-2">
+                <!-- Tasks render here -->
+              </div>
+            </div>
+
+            <!-- Add Task Form Card -->
+            <div class="cartoon-box p-4 bg-orange-50/50 border border-orange-100/80">
+              <h3 class="text-xs font-semibold text-orange-800 mb-2 flex items-center gap-1.5">
+                <span>➕</span> Create a Mission
+              </h3>
+              <form id="add-mission-form" class="flex flex-col gap-2 text-[10px]">
+                <input type="text" id="mission-title" placeholder="Mission Name" class="cartoon-input py-1.5 px-2.5 text-[10px] w-full bg-white" required>
+                
+                <div class="grid grid-cols-1 gap-2">
+                  <select id="mission-type" class="cartoon-input py-1.5 px-2.5 text-[10px] bg-white font-medium text-slate-700">
+                    <option value="📚 Study">📚 Study Session</option>
+                    <option value="🎯 Goal">🎯 Goal</option>
+                    <option value="📅 Meetup">📅 Meetup</option>
+                    <option value="📝 Exam">📝 Exam Prep</option>
+                  </select>
+                  <input type="date" id="mission-date" class="cartoon-input py-1.5 px-2.5 text-[10px] bg-white font-medium text-slate-700" required>
+                </div>
+                
+                <button type="submit" class="cartoon-btn btn-white py-1.5 font-semibold text-[10px] w-full mt-1">
+                  Add Mission 🚀
+                </button>
+              </form>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- RIGHT SIDEBAR: HASHTAGS + DB + TIP (Col-span 3) -->
+    <aside class="col-span-12 lg:col-span-3 sticky-sidebar hidden lg:flex flex-col gap-6">
+      
+      <!-- Database Connection Status widget -->
+      <div class="cartoon-box p-4 bg-white flex flex-col gap-3">
+        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1 px-1">⚙️ Database Setup</h3>
+        <div class="flex items-center justify-between border-b border-slate-50 pb-2">
+          <div class="flex items-center gap-2">
+            <span id="db-status-dot" class="w-2 h-2 rounded-full bg-yellow-400"></span>
+            <span id="db-status-text" class="text-xs font-semibold text-slate-600">Connecting...</span>
+          </div>
+          <button id="trigger-config-btn" class="text-[10px] text-indigo-600 hover:text-indigo-700 hover:underline font-bold">Configure</button>
+        </div>
+        <p class="text-[10px] font-medium text-slate-400 leading-normal">
+          Connect your custom Firestore DB for globally synchronized real-time collaboration.
+        </p>
+      </div>
+
+      <!-- TRENDING SOCIAL MODES (Hashtags) -->
+      <div class="cartoon-box p-4 bg-white flex flex-col gap-3">
+        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">🔥 Trending Topics</h3>
+        <div class="flex flex-col gap-2.5">
+          <div class="flex flex-col px-1 leading-normal">
+            <span class="text-[10px] text-slate-400">1. Education · Trending</span>
+            <span class="text-xs font-bold text-slate-700">#CalculusMidterms</span>
+            <span class="text-[9px] text-slate-400">124 feelings shared</span>
+          </div>
+          <div class="flex flex-col px-1 leading-normal border-t border-slate-50 pt-2">
+            <span class="text-[10px] text-slate-400">2. Productivity · Trending</span>
+            <span class="text-xs font-bold text-slate-700">#3amGrindClub</span>
+            <span class="text-[9px] text-slate-400">89 feelings shared</span>
+          </div>
+          <div class="flex flex-col px-1 leading-normal border-t border-slate-50 pt-2">
+            <span class="text-[10px] text-slate-400">3. Student Life · Trending</span>
+            <span class="text-xs font-bold text-slate-700">#NeedMoreCoffee</span>
+            <span class="text-[9px] text-slate-400">76 feelings shared</span>
+          </div>
+          <div class="flex flex-col px-1 leading-normal border-t border-slate-50 pt-2">
+            <span class="text-[10px] text-slate-400">4. Coding · Trending</span>
+            <span class="text-xs font-bold text-slate-700">#MoodBubble</span>
+            <span class="text-[9px] text-slate-400">54 feelings shared</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Tips Card -->
+      <div class="cartoon-box p-4 bg-sky-50/50 border border-sky-100/80">
+        <h3 class="text-xs font-bold text-sky-800 mb-1 flex items-center gap-1.5">
+          <span>📣</span> Bubble Tip
+        </h3>
+        <p class="text-[11px] font-medium leading-relaxed text-sky-950">
+          Every feeling shared helps other students know they aren't alone. Create study groups to collaborate in real-time!
+        </p>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <!-- ================= POPUP MODAL: USER ACCOUNT INITIALIZATION ================= -->
+  <div id="auth-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="cartoon-box p-6 md:p-8 bg-white max-w-md w-full animate-pop">
+      <div class="text-center mb-6">
+        <span class="text-4xl animate-bounce-slow inline-block mb-2">👋</span>
+        <h2 class="text-2xl font-bold text-slate-800">Welcome Student!</h2>
+        <p class="text-xs text-slate-500 mt-1">Set up your nickname & avatar to start chatting and journaling.</p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <!-- Google Login Button -->
+        <button id="google-login-btn" class="cartoon-btn btn-white py-2 w-full flex items-center justify-center gap-2 border border-slate-200 hover:bg-slate-50 rounded-lg">
+          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.56-2.77c-.98.66-2.23 1.06-3.72 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+          <span class="font-semibold text-xs text-slate-700">Continue with Google</span>
+        </button>
+
+        <!-- OR Divider -->
+        <div class="flex items-center">
+          <hr class="flex-1 border-slate-100">
+          <span class="text-[9px] text-slate-400 px-3 font-semibold uppercase tracking-wider select-none">Or</span>
+          <hr class="flex-1 border-slate-100">
+        </div>
+
+        <!-- Nickname Input -->
+        <div class="flex flex-col gap-1.5">
+          <label for="input-nickname" class="text-xs font-semibold text-slate-600">Create a Cute Nickname:</label>
+          <input type="text" id="input-nickname" placeholder="e.g. StudiousFrog, CodingKitten" class="cartoon-input w-full text-sm" maxlength="20" required>
+        </div>
+
+        <!-- Avatar Selection -->
+        <div class="flex flex-col gap-2">
+          <label class="text-xs font-semibold text-slate-600">Choose Your Sticker Avatar:</label>
+          <div class="grid grid-cols-4 gap-2.5" id="avatar-grid">
+            <button class="avatar-option cartoon-btn btn-white py-2 text-2xl rounded-lg" data-avatar="🦊">🦊</button>
+            <button class="avatar-option cartoon-btn btn-white py-2 text-2xl rounded-lg" data-avatar="🐸">🐸</button>
+            <button class="avatar-option cartoon-btn btn-white py-2 text-2xl rounded-lg" data-avatar="🦄">🦄</button>
+            <button class="avatar-option cartoon-btn btn-white py-2 text-2xl rounded-lg" data-avatar="🐼">🐼</button>
+            <button class="avatar-option cartoon-btn btn-white py-2 text-2xl rounded-lg" data-avatar="🐨">🐨</button>
+            <button class="avatar-option cartoon-btn btn-white py-2 text-2xl rounded-lg" data-avatar="🦁">🦁</button>
+            <button class="avatar-option cartoon-btn btn-white py-2 text-2xl rounded-lg" data-avatar="🐙">🐙</button>
+            <button class="avatar-option cartoon-btn btn-white py-2 text-2xl rounded-lg" data-avatar="🦖">🦖</button>
+          </div>
+        </div>
+
+        <!-- Save Button -->
+        <button id="save-profile-btn" class="cartoon-btn btn-yellow py-2 text-sm font-semibold w-full mt-2">
+          Let's Go! 🚀
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= POPUP MODAL: CREATE COMMUNITY ================= -->
+  <div id="create-community-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="cartoon-box p-6 bg-white max-w-md w-full animate-pop">
+      <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-2">
+        <h2 class="text-lg font-bold text-slate-800">🏫 Create Community</h2>
+        <button id="close-create-comm-btn" class="text-xs font-semibold text-slate-400 hover:text-slate-600">Cancel</button>
+      </div>
+
+      <form id="create-community-form" class="flex flex-col gap-4">
+        <div class="flex flex-col gap-1">
+          <label for="comm-name" class="text-xs font-semibold text-slate-600">Group Name:</label>
+          <input type="text" id="comm-name" placeholder="e.g. Science Olympiad Squad" class="cartoon-input w-full text-sm" required>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label for="comm-icon" class="text-xs font-semibold text-slate-600">Group Emoji Icon:</label>
+          <select id="comm-icon" class="cartoon-input w-full bg-white text-sm font-semibold text-slate-700">
+            <option value="📐">📐 Math / Science</option>
+            <option value="☕">☕ Coding / Late Night Study</option>
+            <option value="📚">📚 Book Club / Literature</option>
+            <option value="🎨">🎨 Creative / Art</option>
+            <option value="🎸">🎸 Music / Band</option>
+            <option value="🧪">🧪 Chemistry Lab</option>
+            <option value="⚽">⚽ Sports / Activities</option>
+            <option value="🦖">🦖 Dino Club</option>
+          </select>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label for="comm-desc" class="text-xs font-semibold text-slate-600">Short Description:</label>
+          <textarea id="comm-desc" placeholder="What is this group all about?" class="cartoon-input w-full h-20 resize-none text-sm" required></textarea>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label for="comm-code" class="text-xs font-semibold text-slate-600">Access Code (Optional - leave blank for public):</label>
+          <input type="text" id="comm-code" placeholder="e.g. 1234, STUDY" class="cartoon-input w-full text-sm">
+        </div>
+
+        <button type="submit" class="cartoon-btn btn-green py-2 text-sm font-semibold w-full mt-2">
+          Create Community 🎉
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= POPUP MODAL: FIREBASE CONFIGURATION ================= -->
+  <div id="firebase-config-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="cartoon-box p-6 bg-white max-w-lg w-full animate-pop">
+      <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-2">
+        <h2 class="text-lg font-bold text-slate-800">⚙️ Firestore Connection Setup</h2>
+        <button id="close-config-btn" class="text-xs font-semibold text-slate-400 hover:text-slate-600">Close</button>
+      </div>
+
+      <p class="text-xs font-medium text-slate-500 mb-4 leading-normal">
+        To synchronize this app's database globally, paste your Firebase web configuration details below. 
+        If blank, the app will run in <span class="text-rose-500 font-semibold">Mock Mode (Local Storage only)</span>.
+        Need help? Check out the <a href="./FIREBASE_SETUP.md" target="_blank" class="text-indigo-600 underline font-semibold hover:text-indigo-700">Firebase Setup Guide</a>.
+      </p>
+
+      <form id="firebase-config-form" class="flex flex-col gap-3 text-xs">
+        <div class="grid grid-cols-2 gap-3">
+          <div class="flex flex-col gap-1">
+            <label class="font-semibold text-slate-600">API Key:</label>
+            <input type="text" id="cfg-apikey" placeholder="AIzaSy..." class="cartoon-input py-2 px-3 text-xs w-full">
+          </div>
+          <div class="flex flex-col gap-1">
+            <label class="font-semibold text-slate-600">Project ID:</label>
+            <input type="text" id="cfg-projectid" placeholder="moodbubble-12345" class="cartoon-input py-2 px-3 text-xs w-full">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="flex flex-col gap-1">
+            <label class="font-semibold text-slate-600">Auth Domain:</label>
+            <input type="text" id="cfg-authdomain" placeholder="moodbubble-12345.firebaseapp.com" class="cartoon-input py-2 px-3 text-xs w-full">
+          </div>
+          <div class="flex flex-col gap-1">
+            <label class="font-semibold text-slate-600">App ID:</label>
+            <input type="text" id="cfg-appid" placeholder="1:12345678:web:abcdef..." class="cartoon-input py-2 px-3 text-xs w-full">
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-2 mt-2">
+          <button type="submit" class="cartoon-btn btn-purple py-2 font-semibold text-xs w-full">
+            Save & Connect Database ⚡
+          </button>
+          
+          <button type="button" id="use-mock-btn" class="cartoon-btn btn-white py-2 font-medium text-xs w-full text-rose-500 border-rose-100 hover:bg-rose-50/50">
+            Disconnect & Use Mock Mode (Local Data)
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Notification Popup Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 cartoon-box p-3 bg-slate-900 border-slate-950 text-white font-semibold shadow-lg text-sm rounded-lg transition-all duration-300 transform translate-y-24 opacity-0 z-50 flex items-center gap-2">
+    <span id="toast-icon">✨</span>
+    <span id="toast-message">Feeling shared successfully!</span>
+  </div>
+
+  <!-- MOBILE BOTTOM NAVIGATION -->
+  <nav class="flex md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 py-2 px-6 justify-around items-center z-40 shadow-lg">
+    <button id="mobile-nav-feed" class="flex flex-col items-center gap-0.5 text-indigo-600">
+      <span class="text-xl">🎈</span>
+      <span class="text-[9px] font-bold">Feed</span>
+    </button>
+    <button id="mobile-nav-communities" class="flex flex-col items-center gap-0.5 text-slate-400">
+      <span class="text-xl">🏫</span>
+      <span class="text-[9px] font-bold">Groups</span>
+    </button>
+    <button id="mobile-nav-config" class="flex flex-col items-center gap-0.5 text-slate-400">
+      <span class="text-xl">⚙️</span>
+      <span class="text-[9px] font-bold">Settings</span>
+    </button>
+  </nav>
+
+  <!-- Load core javascript as module -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>
