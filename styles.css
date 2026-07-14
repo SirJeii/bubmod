@@ -296,6 +296,16 @@ body {
   color: #ffffff !important;
 }
 
+.speech-bubble-purple {
+  background-color: #8b5cf6 !important;
+  border-color: #7c3aed !important;
+  color: #ffffff !important;
+}
+
+.speech-bubble-purple p {
+  color: #ffffff !important;
+}
+
 /* Navigation items active styling */
 .nav-card {
   transition: all 0.15s ease;

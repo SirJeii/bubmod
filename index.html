@@ -44,11 +44,6 @@
     </div>
     
     <div class="flex items-center gap-3">
-      <!-- Database status indicator for mobile -->
-      <button id="db-status-btn-mobile" class="w-6 h-6 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-xs shadow-sm">
-        <span id="db-status-dot-mobile" class="w-2 h-2 rounded-full bg-yellow-400"></span>
-      </button>
-      
       <!-- Mobile Profile button -->
       <button id="mobile-profile-btn" class="w-8 h-8 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-base shadow-sm">
         🦊
@@ -85,6 +80,11 @@
         <button id="nav-communities" class="nav-card w-full justify-start text-left gap-3 text-base">
           <span>🏫</span>
           <span class="font-bold">Communities</span>
+        </button>
+
+        <button id="nav-dms" class="nav-card w-full justify-start text-left gap-3 text-base">
+          <span>💬</span>
+          <span class="font-bold">Direct Messages</span>
         </button>
       </div>
 
@@ -148,9 +148,28 @@
                 </div>
               </div>
 
+              <!-- Attachment details and Progress bar -->
+              <div id="feed-upload-progress" class="hidden items-center gap-2 p-1.5 bg-indigo-50 border border-indigo-100 rounded-lg text-[10px] text-indigo-700 mt-2 shrink-0 animate-pulse">
+                <span class="animate-spin text-sm">🌀</span>
+                <span class="font-semibold flex-1">Uploading file to Telegram Storage...</span>
+              </div>
+              <div id="feed-attachment-preview" class="hidden items-center justify-between gap-2 p-2 bg-slate-50 border border-slate-200 rounded-lg mt-2 text-xs font-semibold">
+                <div class="flex items-center gap-1.5 overflow-hidden">
+                  <span id="feed-preview-icon">📄</span>
+                  <span id="feed-preview-name" class="truncate">filename.jpg</span>
+                </div>
+                <button type="button" id="remove-feed-attachment-btn" class="text-rose-500 hover:text-rose-600 font-bold px-1.5">✕</button>
+              </div>
+
               <!-- Character Counter & Post Trigger Button -->
               <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-100">
-                <span id="char-counter" class="text-xs text-slate-400">0 / 280 characters</span>
+                <div class="flex items-center gap-2">
+                  <label class="cartoon-btn btn-white px-3 py-1.5 text-xs cursor-pointer hover:bg-slate-50 shrink-0 flex items-center justify-center gap-1">
+                    <span>📎 Attach File</span>
+                    <input type="file" id="feed-file-input" class="hidden" />
+                  </label>
+                  <span id="char-counter" class="text-xs text-slate-400">0 / 280 characters</span>
+                </div>
                 <button id="submit-post-btn" class="cartoon-btn btn-blue px-4 py-1.5 text-xs gap-2 rounded-full">
                   <span>Post</span>
                   <span>🚀</span>
@@ -211,6 +230,104 @@
 
       </div>
 
+      <!-- ================= SCREEN 4: DIRECT MESSAGES (DMs & FRIENDS) ================= -->
+      <div id="screen-dms" class="hidden flex flex-col gap-4">
+        
+        <!-- DMs Top Banner -->
+        <div class="cartoon-box p-4 bg-purple-50/50 border border-purple-100 flex justify-between items-center gap-4">
+          <div class="flex items-center gap-3 overflow-hidden">
+            <span class="text-2xl p-1.5 bg-white border border-slate-200 rounded-lg shrink-0">💬</span>
+            <div class="overflow-hidden">
+              <h2 class="text-base font-bold text-slate-800">Direct Messages</h2>
+              <p class="text-xs text-slate-500 truncate mt-0.5">Chat 1-on-1 with friends and share files securely via Telegram.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columns layout: Chat and Friends Directory -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+          
+          <!-- Column 1: Friends and Conversations (Col-span 5) -->
+          <div class="lg:col-span-5 flex flex-col gap-4">
+            <!-- Active Conversations card -->
+            <div class="cartoon-box p-4 bg-white flex flex-col h-[250px]">
+              <h3 class="text-xs font-extrabold uppercase text-slate-400 tracking-wider border-b border-slate-100 pb-2 mb-2 flex justify-between items-center">
+                <span>💬 Conversations</span>
+                <span id="dm-unread-badge" class="bg-indigo-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full hidden">0</span>
+              </h3>
+              <div id="dm-conversations-list" class="flex-1 overflow-y-auto flex flex-col gap-2">
+                <div class="text-center py-8 text-xs text-slate-400 font-semibold">
+                  No active chats yet. Find friends below to start a chat!
+                </div>
+              </div>
+            </div>
+
+            <!-- Friends Directory and Requests card -->
+            <div class="cartoon-box p-4 bg-white flex flex-col h-[280px]">
+              <h3 class="text-xs font-extrabold uppercase text-slate-400 tracking-wider border-b border-slate-100 pb-2 mb-2 flex justify-between items-center">
+                <span>👥 Friends & Users</span>
+                <span id="friend-requests-badge" class="bg-rose-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full hidden">0</span>
+              </h3>
+              
+              <!-- Search box -->
+              <input type="text" id="find-friends-input" placeholder="Search users by name..." class="cartoon-input py-1.5 px-3 text-[10px] w-full bg-slate-50 mb-2 border border-slate-200" />
+              
+              <div id="friends-directory-list" class="flex-1 overflow-y-auto flex flex-col gap-2">
+                <div class="text-center py-8 text-xs text-slate-400 font-semibold">
+                  Loading user directory...
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2: Direct Chat Pane (Col-span 7) -->
+          <div class="lg:col-span-7 cartoon-box p-4 bg-white flex flex-col h-[546px]" id="dm-chat-pane">
+            <div class="flex-1 flex flex-col items-center justify-center text-center text-slate-400 p-6" id="dm-chat-placeholder">
+              <span class="text-4xl mb-2">💬</span>
+              <h3 class="font-bold text-slate-700 text-sm">Select a Conversation</h3>
+              <p class="text-xs text-slate-400 mt-1 max-w-xs leading-normal">Choose a friend from the conversations list, or add friends in the directory to start a private real-time chat.</p>
+            </div>
+
+            <div class="flex-1 flex flex-col h-full hidden" id="dm-chat-active-window">
+              <!-- Active DM Chat Header -->
+              <div class="flex items-center gap-2 pb-2 mb-3 border-b border-slate-100 shrink-0">
+                <span id="dm-active-avatar" class="avatar-circle-sm">🦊</span>
+                <div>
+                  <span id="dm-active-nickname" class="font-bold text-slate-800 text-xs block">Friend Name</span>
+                  <span class="text-[9px] text-purple-500 font-bold block leading-none">🟢 Private Room</span>
+                </div>
+              </div>
+
+              <!-- Message items -->
+              <div id="dm-messages-container" class="flex-1 overflow-y-auto pr-2 mb-3 flex flex-col gap-3">
+                <!-- Messages will load dynamically -->
+              </div>
+
+              <!-- File Upload indicator -->
+              <div id="dm-upload-progress" class="hidden items-center gap-2 p-1.5 bg-indigo-50 border border-indigo-100 rounded-lg text-[10px] text-indigo-700 mb-2 shrink-0 animate-pulse">
+                <span class="animate-spin text-sm">🌀</span>
+                <span class="font-semibold flex-1">Uploading file to Telegram Storage...</span>
+              </div>
+
+              <!-- DM compose input bar -->
+              <div class="flex items-center gap-2 shrink-0">
+                <!-- Paperclip icon for upload -->
+                <label class="cartoon-btn btn-white p-2 text-sm cursor-pointer hover:bg-slate-50 shrink-0 flex items-center justify-center">
+                  <span>📎</span>
+                  <input type="file" id="dm-file-input" class="hidden" />
+                </label>
+                
+                <input type="text" id="dm-chat-input" placeholder="Type a private message..." class="cartoon-input flex-1 py-1.5 px-3 text-xs" />
+                
+                <button id="send-dm-btn" class="cartoon-btn btn-purple px-3.5 py-1.5 text-xs gap-1">
+                  <span>Send</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
       <!-- ================= SCREEN 3: ACTIVE COMMUNITY (CHAT + TASKS) ================= -->
       <div id="screen-active-community" class="hidden flex flex-col gap-4">
         
@@ -243,7 +360,15 @@
             </div>
 
             <!-- Chat input bar -->
-            <div class="flex gap-2">
+            <div id="comm-upload-progress" class="hidden items-center gap-2 p-1.5 bg-indigo-50 border border-indigo-100 rounded-lg text-[10px] text-indigo-700 mb-2 animate-pulse">
+              <span class="animate-spin text-sm">🌀</span>
+              <span class="font-semibold flex-1">Uploading file to Telegram Storage...</span>
+            </div>
+            <div class="flex gap-2 items-center">
+              <label class="cartoon-btn btn-white p-2 text-sm cursor-pointer hover:bg-slate-50 shrink-0 flex items-center justify-center">
+                <span>📎</span>
+                <input type="file" id="comm-file-input" class="hidden" />
+              </label>
               <input type="text" id="chat-input" placeholder="Type a message to the group..." class="cartoon-input flex-1 py-1.5 px-3 text-xs" />
               <button id="send-chat-btn" class="cartoon-btn btn-blue px-3 py-1.5 text-xs gap-1">
                 <span>Send</span>
@@ -301,20 +426,6 @@
     <!-- RIGHT SIDEBAR: HASHTAGS + DB + TIP (Col-span 3) -->
     <aside class="col-span-12 lg:col-span-3 sticky-sidebar hidden lg:flex flex-col gap-6">
       
-      <!-- Database Connection Status widget -->
-      <div class="cartoon-box p-4 bg-white flex flex-col gap-3">
-        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1 px-1">⚙️ Database Setup</h3>
-        <div class="flex items-center justify-between border-b border-slate-50 pb-2">
-          <div class="flex items-center gap-2">
-            <span id="db-status-dot" class="w-2 h-2 rounded-full bg-yellow-400"></span>
-            <span id="db-status-text" class="text-xs font-semibold text-slate-600">Connecting...</span>
-          </div>
-          <button id="trigger-config-btn" class="text-[10px] text-indigo-600 hover:text-indigo-700 hover:underline font-bold">Configure</button>
-        </div>
-        <p class="text-[10px] font-medium text-slate-400 leading-normal">
-          Connect your custom Firestore DB for globally synchronized real-time collaboration.
-        </p>
-      </div>
 
       <!-- TRENDING SOCIAL MODES (Hashtags) -->
       <div class="cartoon-box p-4 bg-white flex flex-col gap-3">
@@ -406,6 +517,44 @@
           </div>
         </div>
 
+        <!-- Custom Avatar Upload -->
+        <div class="flex flex-col gap-1.5 mt-2">
+          <label class="text-xs font-semibold text-slate-600">Or Upload a Custom Photo:</label>
+          <div class="flex items-center gap-3">
+            <div id="custom-avatar-preview" class="w-12 h-12 rounded-full border border-slate-200 bg-slate-50 flex items-center justify-center text-xs text-slate-400 shrink-0 overflow-hidden">
+              <span>None</span>
+            </div>
+            
+            <label class="cartoon-btn btn-white py-1.5 px-3 text-xs cursor-pointer hover:bg-slate-50 shrink-0 flex items-center justify-center gap-1.5 font-bold">
+              <span>🖼️ Choose Photo</span>
+              <input type="file" id="input-avatar-file" class="hidden" accept="image/*" />
+            </label>
+            
+            <span id="avatar-upload-status" class="text-[10px] text-indigo-600 font-bold hidden animate-pulse">Uploading...</span>
+          </div>
+        </div>
+
+
+        <!-- Telegram storage setup (optional) -->
+        <div class="flex flex-col gap-2 mt-2 pt-3 border-t border-slate-100">
+          <span class="text-xs font-bold text-slate-700 flex items-center gap-1">
+            <span>✈️</span> Telegram Hosting (Optional)
+          </span>
+          <div class="grid grid-cols-2 gap-2 text-[10px]">
+            <div class="flex flex-col gap-1">
+              <label for="input-tg-token" class="font-semibold text-slate-500">Bot Token:</label>
+              <input type="password" id="input-tg-token" placeholder="723652:AAH..." class="cartoon-input w-full py-1.5 px-2 bg-slate-50">
+            </div>
+            <div class="flex flex-col gap-1">
+              <label for="input-tg-chatid" class="font-semibold text-slate-500">Chat/Channel ID:</label>
+              <input type="text" id="input-tg-chatid" placeholder="-100..." class="cartoon-input w-full py-1.5 px-2 bg-slate-50">
+            </div>
+          </div>
+          <p class="text-[9px] text-slate-400 leading-tight">
+            Enable attachments up to 40MB by entering a Telegram Bot Token and Chat ID. Files are hosted for free on Telegram!
+          </p>
+        </div>
+
         <!-- Save Button -->
         <button id="save-profile-btn" class="cartoon-btn btn-yellow py-2 text-sm font-semibold w-full mt-2">
           Let's Go! 🚀
@@ -459,55 +608,6 @@
     </div>
   </div>
 
-  <!-- ================= POPUP MODAL: FIREBASE CONFIGURATION ================= -->
-  <div id="firebase-config-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="cartoon-box p-6 bg-white max-w-lg w-full animate-pop">
-      <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-2">
-        <h2 class="text-lg font-bold text-slate-800">⚙️ Firestore Connection Setup</h2>
-        <button id="close-config-btn" class="text-xs font-semibold text-slate-400 hover:text-slate-600">Close</button>
-      </div>
-
-      <p class="text-xs font-medium text-slate-500 mb-4 leading-normal">
-        To synchronize this app's database globally, paste your Firebase web configuration details below. 
-        If blank, the app will run in <span class="text-rose-500 font-semibold">Mock Mode (Local Storage only)</span>.
-        Need help? Check out the <a href="./FIREBASE_SETUP.md" target="_blank" class="text-indigo-600 underline font-semibold hover:text-indigo-700">Firebase Setup Guide</a>.
-      </p>
-
-      <form id="firebase-config-form" class="flex flex-col gap-3 text-xs">
-        <div class="grid grid-cols-2 gap-3">
-          <div class="flex flex-col gap-1">
-            <label class="font-semibold text-slate-600">API Key:</label>
-            <input type="text" id="cfg-apikey" placeholder="AIzaSy..." class="cartoon-input py-2 px-3 text-xs w-full">
-          </div>
-          <div class="flex flex-col gap-1">
-            <label class="font-semibold text-slate-600">Project ID:</label>
-            <input type="text" id="cfg-projectid" placeholder="moodbubble-12345" class="cartoon-input py-2 px-3 text-xs w-full">
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div class="flex flex-col gap-1">
-            <label class="font-semibold text-slate-600">Auth Domain:</label>
-            <input type="text" id="cfg-authdomain" placeholder="moodbubble-12345.firebaseapp.com" class="cartoon-input py-2 px-3 text-xs w-full">
-          </div>
-          <div class="flex flex-col gap-1">
-            <label class="font-semibold text-slate-600">App ID:</label>
-            <input type="text" id="cfg-appid" placeholder="1:12345678:web:abcdef..." class="cartoon-input py-2 px-3 text-xs w-full">
-          </div>
-        </div>
-
-        <div class="flex flex-col gap-2 mt-2">
-          <button type="submit" class="cartoon-btn btn-purple py-2 font-semibold text-xs w-full">
-            Save & Connect Database ⚡
-          </button>
-          
-          <button type="button" id="use-mock-btn" class="cartoon-btn btn-white py-2 font-medium text-xs w-full text-rose-500 border-rose-100 hover:bg-rose-50/50">
-            Disconnect & Use Mock Mode (Local Data)
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
 
   <!-- Notification Popup Toast -->
   <div id="toast" class="fixed bottom-6 right-6 cartoon-box p-3 bg-slate-900 border-slate-950 text-white font-semibold shadow-lg text-sm rounded-lg transition-all duration-300 transform translate-y-24 opacity-0 z-50 flex items-center gap-2">
@@ -525,10 +625,11 @@
       <span class="text-xl">🏫</span>
       <span class="text-[9px] font-bold">Groups</span>
     </button>
-    <button id="mobile-nav-config" class="flex flex-col items-center gap-0.5 text-slate-400">
-      <span class="text-xl">⚙️</span>
-      <span class="text-[9px] font-bold">Settings</span>
+    <button id="mobile-nav-dms" class="flex flex-col items-center gap-0.5 text-slate-400">
+      <span class="text-xl">💬</span>
+      <span class="text-[9px] font-bold">DMs</span>
     </button>
+
   </nav>
 
   <!-- Load core javascript as module -->
