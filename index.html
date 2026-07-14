@@ -21,12 +21,12 @@
             cartoonDark: '#0f172a'
           },
           boxShadow: {
-            cartoon: '0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05)',
-            'cartoon-btn': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-            'cartoon-btn-hover': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05)',
-            'cartoon-btn-active': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-            'cartoon-lg': '0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05)',
-            'cartoon-sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)'
+            cartoon: '4px 4px 0px 0px #000000',
+            'cartoon-btn': '2px 2px 0px 0px #000000',
+            'cartoon-btn-hover': '3px 3px 0px 0px #000000',
+            'cartoon-btn-active': '0px 0px 0px 0px #000000',
+            'cartoon-lg': '6px 6px 0px 0px #000000',
+            'cartoon-sm': '1px 1px 0px 0px #000000'
           }
         }
       }
@@ -44,21 +44,21 @@
       --card-bg: #ffffff;
       --text-main: #0f172a;
       --text-muted: #64748b;
-      --border-color: #e2e8f0;
-      --border-hover: #cbd5e1;
+      --border-color: #000000;
+      --border-hover: #000000;
 
       --mood-yellow-bg: #fefcf0;
-      --mood-yellow-border: #fef08a;
+      --mood-yellow-border: #fde047;
       --mood-pink-bg: #fff1f2;
-      --mood-pink-border: #fecdd3;
+      --mood-pink-border: #f43f5e;
       --mood-blue-bg: #f0f9ff;
-      --mood-blue-border: #bae6fd;
+      --mood-blue-border: #38bdf8;
       --mood-green-bg: #f0fdf4;
-      --mood-green-border: #bbf7d0;
+      --mood-green-border: #10b981;
       --mood-purple-bg: #faf5ff;
-      --mood-purple-border: #e9d5ff;
+      --mood-purple-border: #8b5cf6;
       --mood-orange-bg: #fff7ed;
-      --mood-orange-border: #fed7aa;
+      --mood-orange-border: #f97316;
     }
 
     body {
@@ -100,9 +100,9 @@
 
     .cartoon-box {
       background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+      border: 2px solid #000000;
+      border-radius: 8px;
+      box-shadow: 4px 4px 0px 0px #000000;
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -111,13 +111,13 @@
       height: 42px;
       border-radius: 50%;
       background-color: #f1f5f9;
-      border: 1px solid var(--border-color);
+      border: 2px solid #000000;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       font-size: 1.35rem;
       flex-shrink: 0;
-      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+      box-shadow: 1px 1px 0px 0px #000000;
     }
 
     .avatar-circle-sm {
@@ -125,11 +125,25 @@
       height: 32px;
       border-radius: 50%;
       background-color: #f1f5f9;
-      border: 1px solid var(--border-color);
+      border: 2px solid #000000;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       font-size: 1rem;
+      flex-shrink: 0;
+      box-shadow: 1px 1px 0px 0px #000000;
+    }
+
+    .avatar-circle-xs {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background-color: #f1f5f9;
+      border: 1px solid #000000;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
       flex-shrink: 0;
     }
 
@@ -137,76 +151,76 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      font-weight: 600;
+      border: 2px solid #000000;
+      border-radius: 6px;
+      font-weight: 700;
       font-size: 0.875rem;
-      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 2px 2px 0px 0px #000000;
+      transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
       user-select: none;
       padding: 8px 16px;
     }
 
     .cartoon-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0px 0px #000000;
     }
 
     .cartoon-btn:active {
-      transform: translateY(0);
-      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      transform: translate(2px, 2px);
+      box-shadow: 0px 0px 0px 0px #000000;
     }
 
     .btn-yellow {
-      background-color: #fef08a;
-      color: #854d0e;
-      border-color: #fef08a;
+      background-color: #fde047;
+      color: #000000;
+      border-color: #000000;
     }
 
     .btn-yellow:hover {
-      background-color: #fde047;
+      background-color: #fef08a;
     }
 
     .btn-blue {
-      background-color: var(--primary);
-      color: #ffffff;
-      border-color: var(--primary);
+      background-color: #a5b4fc; /* soft indigo / lavender */
+      color: #000000;
+      border-color: #000000;
     }
 
     .btn-blue:hover {
-      background-color: var(--primary-hover);
+      background-color: #c7d2fe;
     }
 
     .btn-green {
-      background-color: #10b981;
-      color: #ffffff;
-      border-color: #10b981;
+      background-color: #86efac; /* soft green */
+      color: #000000;
+      border-color: #000000;
     }
 
     .btn-green:hover {
-      background-color: #059669;
+      background-color: #bbf7d0;
     }
 
     .btn-purple {
-      background-color: #8b5cf6;
-      color: #ffffff;
-      border-color: #8b5cf6;
+      background-color: #d8b4fe; /* soft purple */
+      color: #000000;
+      border-color: #000000;
     }
 
     .btn-purple:hover {
-      background-color: #7c3aed;
+      background-color: #e9d5ff;
     }
 
     .btn-white {
       background-color: #ffffff;
-      color: var(--text-main);
-      border-color: var(--border-color);
+      color: #000000;
+      border-color: #000000;
     }
 
     .btn-white:hover {
       background-color: #f8fafc;
-      border-color: var(--border-hover);
+      border-color: #000000;
     }
 
     .social-react-btn {
@@ -657,7 +671,7 @@
           </button>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
-          <div class="lg:col-span-7 cartoon-box p-4 bg-white flex flex-col h-[500px]">
+          <div class="lg:col-span-6 cartoon-box p-4 bg-white flex flex-col h-[520px]">
             <h3 class="text-sm font-bold border-b border-slate-100 pb-2 mb-3 flex items-center gap-2 text-slate-800">
               <span>💬</span> Group Chat
             </h3>
@@ -678,30 +692,30 @@
                 class="cartoon-btn btn-blue px-3 py-1.5 text-xs gap-1"><span>Send</span></button>
             </div>
           </div>
-          <div class="lg:col-span-5 flex flex-col gap-4">
-            <div class="cartoon-box p-4 bg-white flex flex-col h-[280px]">
+          <div class="lg:col-span-6 flex flex-col gap-4">
+            <div class="cartoon-box p-4 bg-white flex flex-col h-[340px]">
               <h3 class="text-sm font-bold border-b border-slate-100 pb-2 mb-3 flex items-center gap-2 text-slate-800">
                 <span>🎯</span> Mission Board
               </h3>
-              <div id="missions-container" class="flex-1 overflow-y-auto pr-1 flex flex-col gap-2"></div>
+              <div id="missions-container" class="flex-1 overflow-hidden"></div>
             </div>
-            <div class="cartoon-box p-4 bg-orange-50/50 border border-orange-100/80">
+            <div class="cartoon-box p-4 bg-orange-50/50 border border-orange-100/80 flex flex-col justify-between h-[164px]">
               <h3 class="text-xs font-semibold text-orange-800 mb-2 flex items-center gap-1.5">
                 <span>➕</span> Create a Mission
               </h3>
-              <form id="add-mission-form" class="flex flex-col gap-2 text-[10px]">
+              <form id="add-mission-form" class="flex flex-col gap-2 text-[10px] justify-between flex-1">
                 <input type="text" id="mission-title" placeholder="Mission Name"
-                  class="cartoon-input py-1.5 px-2.5 text-[10px] w-full bg-white" required>
-                <div class="grid grid-cols-1 gap-2">
+                  class="cartoon-input py-1.5 px-2.5 text-[10px] w-full bg-white animate-pop" required>
+                <div class="grid grid-cols-2 gap-2">
                   <select id="mission-type"
-                    class="cartoon-input py-1.5 px-2.5 text-[10px] bg-white font-medium text-slate-700">
+                    class="cartoon-input py-1.5 px-2.5 text-[10px] bg-white font-medium text-slate-700 animate-pop">
                     <option value="📚 Study">📚 Study Session</option>
                     <option value="🎯 Goal">🎯 Goal</option>
                     <option value="📅 Meetup">📅 Meetup</option>
                     <option value="📝 Exam">📝 Exam Prep</option>
                   </select>
                   <input type="date" id="mission-date"
-                    class="cartoon-input py-1.5 px-2.5 text-[10px] bg-white font-medium text-slate-700" required>
+                    class="cartoon-input py-1.5 px-2.5 text-[10px] bg-white font-medium text-slate-700 animate-pop" required>
                 </div>
                 <button type="submit" class="cartoon-btn btn-white py-1.5 font-semibold text-[10px] w-full mt-1">
                   Add Mission 🚀
@@ -710,7 +724,6 @@
             </div>
           </div>
         </div>
-      </div>
     </section>
 
     <aside class="col-span-12 lg:col-span-3 sticky-sidebar hidden lg:flex flex-col gap-6">
@@ -882,7 +895,7 @@
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
     import {
-      getFirestore, collection, addDoc, onSnapshot, query, orderBy, limit, doc, updateDoc, increment, getDocs, setDoc, where
+      getFirestore, collection, addDoc, onSnapshot, query, orderBy, limit, doc, updateDoc, increment, getDocs, setDoc, where, deleteDoc, deleteField
     } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
     import {
       getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged
@@ -917,10 +930,22 @@
         const q = query(collection(this.db, 'communities', commId, 'tasks'), orderBy('dueDate', 'asc'));
         return onSnapshot(q, (snapshot) => { const tasks = []; snapshot.forEach(doc => tasks.push({ id: doc.id, ...doc.data() })); callback(tasks); });
       },
-      async toggleTask(commId, taskId, completedStatus, completedBy) {
+      async toggleTask(commId, taskId, completedStatus, userUid, userNickname, userAvatar) {
         const ref = doc(this.db, 'communities', commId, 'tasks', taskId);
-        await updateDoc(ref, { completed: completedStatus, completedBy: completedStatus ? completedBy : null });
+        const updates = {};
+        if (completedStatus) {
+          updates[`completions.${userUid}`] = { nickname: userNickname, avatar: userAvatar, timestamp: Date.now() };
+        } else {
+          updates[`completions.${userUid}`] = deleteField();
+        }
+        await updateDoc(ref, updates);
       },
+      async deletePost(postId) { await deleteDoc(doc(this.db, 'posts', postId)); },
+      async updatePost(postId, updatedContent) { await updateDoc(doc(this.db, 'posts', postId), { content: updatedContent, edited: true }); },
+      async deleteChatMessage(commId, msgId) { await deleteDoc(doc(this.db, 'communities', commId, 'messages', msgId)); },
+      async updateChatMessage(commId, msgId, updatedContent) { await updateDoc(doc(this.db, 'communities', commId, 'messages', msgId), { content: updatedContent, edited: true }); },
+      async deletePrivateMessage(chatId, msgId) { await deleteDoc(doc(this.db, 'private_chats', chatId, 'messages', msgId)); },
+      async updatePrivateMessage(chatId, msgId, updatedContent) { await updateDoc(doc(this.db, 'private_chats', chatId, 'messages', msgId), { content: updatedContent, edited: true }); },
       listenUsers(callback) {
         const q = query(collection(this.db, 'users'), limit(150));
         return onSnapshot(q, (snapshot) => { const users = []; snapshot.forEach(doc => users.push(doc.data())); callback(users); });
@@ -1103,19 +1128,40 @@
         posts.forEach((post) => {
           const postCard = document.createElement('article'); postCard.className = `cartoon-box p-4 bg-white border border-slate-200 animate-pop`;
           const moodClass = moodBadgeClasses[post.mood] || 'bg-slate-50 text-slate-700 border-slate-100';
+          const isOwner = currentUser && (post.uid === currentUser.uid || (!post.uid && post.nickname === currentUser.nickname));
+          
           postCard.innerHTML = `
             <div class="flex gap-3">
               ${renderAvatarHTML(post.avatar, 'avatar-circle')}
               <div class="flex-1 flex flex-col gap-1 overflow-hidden">
                 <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-1.5 overflow-hidden">
+                  <div class="flex items-center gap-1.5 overflow-hidden flex-wrap">
                     <span class="font-bold text-slate-800 text-sm truncate leading-tight">${post.nickname}</span>
                     <span class="text-[11px] text-slate-400 truncate leading-tight">@${post.nickname.toLowerCase().replace(/\s+/g, '')}</span>
                     <span class="text-[10px] text-slate-300 leading-none select-none">•</span>
                     <span class="text-[10px] text-slate-400 shrink-0 leading-tight">${formatTime(post.timestamp)}</span>
+                    ${post.edited ? `<span class="text-[9px] font-semibold text-slate-400 shrink-0 bg-slate-50 px-1 rounded border border-slate-200">edited</span>` : ''}
                   </div>
-                  <div class="px-2 py-0.5 rounded-full text-[10px] font-semibold border flex items-center gap-1 shrink-0 ${moodClass}">
-                    <span>${post.emoji}</span><span class="capitalize">${post.mood}</span>
+                  
+                  <div class="flex items-center gap-1.5 shrink-0 ml-1">
+                    <div class="px-2 py-0.5 rounded-full text-[10px] font-semibold border flex items-center gap-1 ${moodClass}">
+                      <span>${post.emoji}</span><span class="capitalize">${post.mood}</span>
+                    </div>
+                    ${isOwner ? `
+                      <div class="relative">
+                        <button class="post-menu-btn text-slate-400 hover:text-slate-600 p-1.5 rounded hover:bg-slate-50 transition-colors leading-none flex items-center" data-post-id="${post.id}">
+                          <span class="text-sm font-extrabold leading-none">&#8942;</span>
+                        </button>
+                        <div class="post-dropdown hidden absolute right-0 mt-1 w-24 bg-white border-2 border-black rounded-lg shadow-cartoon-sm z-20 py-1 animate-pop">
+                          <button class="edit-post-btn w-full text-left px-3 py-1.5 text-[10px] font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-1.5" data-post-id="${post.id}">
+                            <span>✏️</span> Edit
+                          </button>
+                          <button class="delete-post-btn w-full text-left px-3 py-1.5 text-[10px] font-semibold text-rose-600 hover:bg-slate-50 flex items-center gap-1.5" data-post-id="${post.id}">
+                            <span>🗑️</span> Delete
+                          </button>
+                        </div>
+                      </div>
+                    ` : ''}
                   </div>
                 </div>
                 <p class="text-xs md:text-sm text-slate-700 leading-relaxed whitespace-pre-line mt-1 pr-1">${post.content}</p>
@@ -1130,6 +1176,75 @@
           if (post.file) postCard.querySelector('.post-file-container').appendChild(renderFileAttachment(post.file, false));
           container.appendChild(postCard);
         });
+
+        // Bind post dropdown menus
+        container.querySelectorAll('.post-menu-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const dropdown = e.currentTarget.nextElementSibling;
+            // Close all other dropdowns
+            document.querySelectorAll('.post-dropdown').forEach(d => {
+              if (d !== dropdown) d.classList.add('hidden');
+            });
+            dropdown.classList.toggle('hidden');
+          });
+        });
+
+        // Bind edit handlers
+        container.querySelectorAll('.edit-post-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const postId = e.currentTarget.getAttribute('data-post-id');
+            const postCard = e.currentTarget.closest('article');
+            const contentPara = postCard.querySelector('p');
+            const originalContent = contentPara.textContent;
+            
+            // Toggle form
+            if (postCard.querySelector('.post-edit-form')) return;
+            const editForm = document.createElement('div');
+            editForm.className = 'post-edit-form flex flex-col gap-2 mt-2 w-full animate-pop';
+            editForm.innerHTML = `
+              <textarea class="cartoon-input w-full text-xs p-2.5 h-20 resize-none bg-slate-50" maxlength="280">${originalContent}</textarea>
+              <div class="flex gap-2 justify-end">
+                <button class="cancel-edit-btn cartoon-btn btn-white py-1 px-3 text-[10px] font-bold">Cancel</button>
+                <button class="save-edit-btn cartoon-btn btn-blue py-1 px-3 text-[10px] font-bold">Save 💾</button>
+              </div>
+            `;
+            contentPara.classList.add('hidden');
+            contentPara.after(editForm);
+            
+            editForm.querySelector('.cancel-edit-btn').addEventListener('click', () => {
+              editForm.remove();
+              contentPara.classList.remove('hidden');
+            });
+            
+            editForm.querySelector('.save-edit-btn').addEventListener('click', async () => {
+              const newText = editForm.querySelector('textarea').value.trim();
+              if (!newText) return showToast('⚠️', 'Post content cannot be empty.');
+              try {
+                await DB.updatePost(postId, newText);
+                showToast('✏️', 'Post updated!');
+              } catch (err) {
+                showToast('❌', 'Failed to update post.');
+              }
+            });
+          });
+        });
+
+        // Bind delete handlers
+        container.querySelectorAll('.delete-post-btn').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            const postId = e.currentTarget.getAttribute('data-post-id');
+            if (confirm('🗑️ Are you sure you want to delete this post?')) {
+              try {
+                await DB.deletePost(postId);
+                showToast('🗑️', 'Post deleted.');
+              } catch (err) {
+                showToast('❌', 'Failed to delete post.');
+              }
+            }
+          });
+        });
+
         container.querySelectorAll('.react-btn').forEach(btn => {
           btn.addEventListener('click', async (e) => { const b = e.currentTarget; b.disabled = true; try { await DB.addReaction(b.getAttribute('data-post-id'), b.getAttribute('data-type')); showToast('💖', 'Reaction sent!'); } catch (error) { console.error(error); } finally { b.disabled = false; } });
         });
@@ -1205,7 +1320,7 @@
         chatContainer.innerHTML = '';
         if (messages.length === 0) { chatContainer.innerHTML = `<div class="text-center py-8 text-slate-400 text-[10px] font-semibold uppercase tracking-wider">👋 Start conversation</div>`; return; }
         messages.forEach(msg => {
-          const isMe = currentUser && msg.nickname === currentUser.nickname;
+          const isMe = currentUser && (msg.uid === currentUser.uid || (!msg.uid && msg.nickname === currentUser.nickname));
           const wrap = document.createElement('div'); wrap.className = `flex gap-2.5 max-w-full ${isMe ? 'flex-row-reverse self-end' : 'self-start'}`;
           wrap.innerHTML = (isMe ? '' : renderAvatarHTML(msg.avatar, 'avatar-circle-sm self-end shadow-sm bg-white')) +
             `<div class="flex flex-col ${isMe ? 'items-end' : 'items-start'}">
@@ -1214,37 +1329,210 @@
                 <p class="text-xs break-words">${msg.content}</p>
                 <div class="chat-file-container mt-1"></div>
               </div>
-              <span class="text-[9px] text-slate-400 mt-0.5 px-1">${formatTime(msg.timestamp)}</span>
+              <div class="flex items-center gap-1.5 mt-0.5 px-1 text-[9px] text-slate-400">
+                <span>${formatTime(msg.timestamp)}</span>
+                ${msg.edited ? `<span>• <span class="bg-slate-100 border border-slate-200 px-0.5 rounded text-[8px] font-bold text-slate-400">edited</span></span>` : ''}
+                ${isMe ? `
+                  <span>•</span>
+                  <button class="edit-msg-btn font-bold text-indigo-500 hover:underline" data-msg-id="${msg.id}">Edit</button>
+                  <span>•</span>
+                  <button class="delete-msg-btn font-bold text-rose-500 hover:underline" data-msg-id="${msg.id}">Delete</button>
+                ` : ''}
+              </div>
             </div>` + (isMe ? renderAvatarHTML(msg.avatar, 'avatar-circle-sm self-end shadow-sm bg-white') : '');
           if (msg.file) wrap.querySelector('.chat-file-container').appendChild(renderFileAttachment(msg.file, isMe));
           chatContainer.appendChild(wrap);
         });
+
+        // Bind edit handlers
+        chatContainer.querySelectorAll('.edit-msg-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const msgId = e.currentTarget.getAttribute('data-msg-id');
+            const bubble = e.currentTarget.closest('.flex-col').querySelector('.speech-bubble');
+            const contentPara = bubble.querySelector('p');
+            const originalContent = contentPara.textContent;
+            
+            if (bubble.querySelector('.msg-edit-form')) return;
+            const editForm = document.createElement('div');
+            editForm.className = 'msg-edit-form flex flex-col gap-1 mt-1 w-full min-w-[200px]';
+            editForm.innerHTML = `
+              <textarea class="cartoon-input text-xs py-1 px-2 bg-white text-slate-800 w-full resize-none h-12 animate-pop">${originalContent}</textarea>
+              <div class="flex gap-1.5 justify-end">
+                <button class="cancel-msg-edit text-[9px] font-bold text-slate-400 hover:underline">Cancel</button>
+                <button class="save-msg-edit text-[9px] font-bold text-indigo-500 hover:underline">Save</button>
+              </div>
+            `;
+            contentPara.classList.add('hidden');
+            contentPara.after(editForm);
+            
+            editForm.querySelector('.cancel-msg-edit').addEventListener('click', () => {
+              editForm.remove();
+              contentPara.classList.remove('hidden');
+            });
+            
+            editForm.querySelector('.save-msg-edit').addEventListener('click', async () => {
+              const newText = editForm.querySelector('textarea').value.trim();
+              if (!newText) return showToast('⚠️', 'Message content cannot be empty.');
+              try {
+                await DB.updateChatMessage(id, msgId, newText);
+                showToast('✏️', 'Message updated!');
+              } catch (err) {
+                showToast('❌', 'Failed to update message.');
+              }
+            });
+          });
+        });
+
+        // Bind delete handlers
+        chatContainer.querySelectorAll('.delete-msg-btn').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            const msgId = e.currentTarget.getAttribute('data-msg-id');
+            if (confirm('🗑️ Delete this message?')) {
+              try {
+                await DB.deleteChatMessage(id, msgId);
+                showToast('🗑️', 'Message deleted.');
+              } catch (err) {
+                showToast('❌', 'Failed to delete message.');
+              }
+            }
+          });
+        });
+
         chatContainer.scrollTop = chatContainer.scrollHeight;
       });
 
       const taskContainer = document.getElementById('missions-container');
       const unsubTasks = DB.listenTasks(id, (tasks) => {
         taskContainer.innerHTML = '';
-        if (tasks.length === 0) { taskContainer.innerHTML = `<div class="text-center py-8 text-slate-400 text-xs">🎯 No active missions. Add a task!</div>`; return; }
+        if (tasks.length === 0) {
+          taskContainer.innerHTML = `
+            <div class="text-center py-12 text-slate-400 text-xs font-semibold">
+              🎯 No missions yet.<br>Add a task below to start!
+            </div>
+          `;
+          return;
+        }
+
+        // Create Kanban board columns
+        taskContainer.innerHTML = `
+          <div class="grid grid-cols-2 gap-3 h-full overflow-hidden text-left">
+            <!-- TO DO COLUMN -->
+            <div class="flex flex-col h-full min-w-0">
+              <div class="flex items-center justify-between pb-1.5 mb-2 border-b border-dashed border-slate-200 shrink-0">
+                <span class="text-[11px] font-bold text-slate-600 flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span> To Do
+                </span>
+                <span id="todo-count" class="text-[9px] px-1 py-0.2 rounded font-bold bg-indigo-50 text-indigo-600 border border-indigo-100">0</span>
+              </div>
+              <div id="todo-list" class="flex-1 overflow-y-auto pr-0.5 flex flex-col gap-2 scrollbar-thin"></div>
+            </div>
+
+            <!-- DONE COLUMN -->
+            <div class="flex flex-col h-full min-w-0 border-l border-slate-100 pl-2">
+              <div class="flex items-center justify-between pb-1.5 mb-2 border-b border-dashed border-slate-200 shrink-0">
+                <span class="text-[11px] font-bold text-slate-600 flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Done
+                </span>
+                <span id="done-count" class="text-[9px] px-1 py-0.2 rounded font-bold bg-emerald-50 text-emerald-600 border border-emerald-100">0</span>
+              </div>
+              <div id="done-list" class="flex-1 overflow-y-auto pr-0.5 flex flex-col gap-2 scrollbar-thin"></div>
+            </div>
+          </div>
+        `;
+
+        const todoList = document.getElementById('todo-list');
+        const doneList = document.getElementById('done-list');
+        let todoCount = 0;
+        let doneCount = 0;
+
         tasks.forEach(task => {
           const item = document.createElement('div');
-          item.className = `cartoon-box p-2.5 border border-slate-200 flex items-center justify-between gap-3 animate-pop rounded-lg ${task.completed ? 'bg-slate-50/80 opacity-70' : 'bg-white'}`;
-          let badgeClass = task.type.includes('📚') ? 'bg-sky-50 text-sky-600 border-sky-100' : task.type.includes('📝') ? 'bg-rose-50 text-rose-600 border-rose-100' : 'bg-purple-50 text-purple-600 border-purple-100';
-          item.innerHTML = `
-            <div class="flex items-center gap-3 overflow-hidden">
-              <div class="task-check cartoon-checkbox shrink-0 ${task.completed ? 'checked' : ''}" data-task-id="${task.id}" data-checked="${task.completed}"></div>
-              <div class="overflow-hidden">
-                <span class="text-[10px] px-2 py-0.5 rounded-full font-semibold border ${badgeClass} inline-block leading-none mb-1">${task.type}</span>
-                <h4 class="font-bold text-xs text-slate-700 truncate ${task.completed ? 'line-through text-slate-400' : ''}">${task.title}</h4>
-                ${task.completed ? `<span class="text-[10px] font-semibold text-emerald-600 block mt-0.5">Completed by ${task.completedBy || 'Student'} ✓</span>` : `<span class="text-[10px] text-slate-400 block mt-0.5">Due: ${task.dueDate}</span>`}
+          let badgeClass = task.type.includes('📚') 
+            ? 'bg-sky-50 text-sky-600 border-sky-100' 
+            : task.type.includes('📝') 
+              ? 'bg-rose-50 text-rose-600 border-rose-100' 
+              : 'bg-purple-50 text-purple-600 border-purple-100';
+
+          const isCompletedForMe = (currentUser && task.completions && task.completions[currentUser.uid]) || (!task.completions && task.completed);
+
+          // Get completion list for avatars display
+          let completionsMap = { ...task.completions };
+          if (task.completed && Object.keys(completionsMap).length === 0) {
+            completionsMap['legacy'] = { nickname: task.completedBy || 'Student', avatar: task.completedByAvatar || '🦊' };
+          }
+          const completionsList = Object.entries(completionsMap).map(([uid, info]) => ({
+            uid,
+            nickname: info.nickname || 'Student',
+            avatar: info.avatar || '🦊'
+          }));
+
+          const completionsHTML = completionsList.length > 0 
+            ? `<div class="flex items-center -space-x-1.5 overflow-hidden">
+                ${completionsList.map(u => `
+                  <span class="avatar-circle-xs border-2 border-white bg-slate-100 hover:scale-110 transition-transform cursor-pointer shrink-0" style="width:16px; height:16px; font-size: 8px;" title="${u.nickname} completed this!">${renderAvatarHTML(u.avatar, 'w-full h-full rounded-full inline-flex items-center justify-center text-[9px]')}</span>
+                `).join('')}
+               </div>`
+            : '';
+
+          if (!isCompletedForMe) {
+            todoCount++;
+            item.className = 'cartoon-box p-2 bg-white border border-slate-200 flex flex-col gap-1.5 animate-pop rounded-lg hover:border-slate-300 transition-colors shadow-sm';
+            item.innerHTML = `
+              <div class="flex items-start gap-1.5 min-w-0">
+                <div class="task-check cartoon-checkbox shrink-0 cursor-pointer mt-0.5" data-task-id="${task.id}" data-checked="false"></div>
+                <div class="overflow-hidden min-w-0 flex-1">
+                  <h4 class="font-bold text-[11px] text-slate-700 truncate leading-tight" title="${task.title}">${task.title}</h4>
+                </div>
               </div>
-            </div>`;
-          taskContainer.appendChild(item);
+              <div class="flex items-center justify-between gap-1.5 mt-0.5 text-[8px] border-t border-slate-100/50 pt-1.5 leading-none min-w-0">
+                <span class="px-1.5 py-0.5 rounded-full font-semibold border ${badgeClass} inline-block">${task.type}</span>
+                ${completionsHTML ? `
+                  <div class="flex items-center gap-1 min-w-0 shrink-0">
+                    <span class="text-slate-400 font-medium shrink-0">Done:</span>
+                    ${completionsHTML}
+                  </div>` : `
+                  <span class="text-slate-400 font-medium shrink-0">Due: ${task.dueDate}</span>`}
+              </div>
+            `;
+            todoList.appendChild(item);
+          } else {
+            doneCount++;
+            item.className = 'cartoon-box p-2 bg-slate-50/60 opacity-85 border border-slate-200 flex flex-col gap-1.5 animate-pop rounded-lg hover:opacity-100 transition-opacity shadow-sm';
+            item.innerHTML = `
+              <div class="flex items-start gap-1.5 min-w-0">
+                <div class="task-check cartoon-checkbox checked shrink-0 cursor-pointer mt-0.5" data-task-id="${task.id}" data-checked="true"></div>
+                <div class="overflow-hidden min-w-0 flex-1">
+                  <h4 class="font-bold text-[11px] text-slate-400 line-through truncate leading-tight" title="${task.title}">${task.title}</h4>
+                </div>
+              </div>
+              <div class="flex items-center justify-between gap-1.5 mt-0.5 text-[8px] border-t border-slate-100/50 pt-1.5 leading-none min-w-0">
+                <span class="px-1.5 py-0.5 rounded-full font-semibold border ${badgeClass} opacity-60 inline-block shrink-0">${task.type}</span>
+                <div class="flex items-center gap-1 min-w-0 shrink-0">
+                  <span class="text-slate-400 font-medium shrink-0">Done:</span>
+                  ${completionsHTML}
+                </div>
+              </div>
+            `;
+            doneList.appendChild(item);
+          }
         });
+
+        document.getElementById('todo-count').textContent = todoCount;
+        document.getElementById('done-count').textContent = doneCount;
+
         taskContainer.querySelectorAll('.task-check').forEach(box => {
           box.addEventListener('click', async (e) => {
             const t = e.currentTarget; t.style.pointerEvents = 'none';
-            try { await DB.toggleTask(id, t.getAttribute('data-task-id'), t.getAttribute('data-checked') !== 'true', currentUser ? currentUser.nickname : 'Guest'); }
+            try { 
+              await DB.toggleTask(
+                id, 
+                t.getAttribute('data-task-id'), 
+                t.getAttribute('data-checked') !== 'true', 
+                currentUser ? currentUser.uid : 'Guest',
+                currentUser ? currentUser.nickname : 'Guest',
+                currentUser ? currentUser.avatar : '🦊'
+              ); 
+            }
             catch (error) { console.error(error); }
           });
         });
@@ -1324,11 +1612,83 @@
         messages.forEach(msg => {
           const isMe = msg.senderId === currentUser.uid; const bubbleWrap = document.createElement('div'); bubbleWrap.className = `flex gap-2.5 max-w-full ${isMe ? 'flex-row-reverse self-end' : 'self-start'}`;
           const avatarBox = renderAvatarHTML(msg.senderAvatar, 'avatar-circle-sm self-end shadow-sm bg-white');
-          const speechBubble = `<div class="flex flex-col ${isMe ? 'items-end' : 'items-start'}"><span class="text-[10px] font-bold text-slate-400 mb-0.5 px-1">${msg.senderName}</span><div class="speech-bubble ${isMe ? 'speech-bubble-purple' : 'speech-bubble-left bg-slate-100 border-slate-200 text-slate-800'}"><p class="text-xs break-words">${msg.content}</p><div class="chat-file-container mt-1"></div></div><span class="text-[9px] text-slate-400 mt-0.5 px-1">${formatTime(msg.timestamp)}</span></div>`;
+          const speechBubble = `
+            <div class="flex flex-col ${isMe ? 'items-end' : 'items-start'}">
+              <span class="text-[10px] font-bold text-slate-400 mb-0.5 px-1">${msg.senderName}</span>
+              <div class="speech-bubble ${isMe ? 'speech-bubble-purple' : 'speech-bubble-left bg-slate-100 border-slate-200 text-slate-800'}">
+                <p class="text-xs break-words">${msg.content}</p>
+                <div class="chat-file-container mt-1"></div>
+              </div>
+              <div class="flex items-center gap-1.5 mt-0.5 px-1 text-[9px] text-slate-400">
+                <span>${formatTime(msg.timestamp)}</span>
+                ${msg.edited ? `<span>• <span class="bg-purple-100 border border-purple-200 px-0.5 rounded text-[8px] font-bold text-purple-700">edited</span></span>` : ''}
+                ${isMe ? `
+                  <span>•</span>
+                  <button class="edit-dm-btn font-bold text-purple-500 hover:underline" data-msg-id="${msg.id}">Edit</button>
+                  <span>•</span>
+                  <button class="delete-dm-btn font-bold text-rose-500 hover:underline" data-msg-id="${msg.id}">Delete</button>
+                ` : ''}
+              </div>
+            </div>`;
           bubbleWrap.innerHTML = isMe ? `${speechBubble}${avatarBox}` : `${avatarBox}${speechBubble}`;
           if (msg.file) bubbleWrap.querySelector('.chat-file-container').appendChild(renderFileAttachment(msg.file, isMe));
           messagesContainer.appendChild(bubbleWrap);
         });
+
+        // Bind DM edit handlers
+        messagesContainer.querySelectorAll('.edit-dm-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const msgId = e.currentTarget.getAttribute('data-msg-id');
+            const bubble = e.currentTarget.closest('.flex-col').querySelector('.speech-bubble');
+            const contentPara = bubble.querySelector('p');
+            const originalContent = contentPara.textContent;
+            
+            if (bubble.querySelector('.dm-edit-form')) return;
+            const editForm = document.createElement('div');
+            editForm.className = 'dm-edit-form flex flex-col gap-1 mt-1 w-full min-w-[200px]';
+            editForm.innerHTML = `
+              <textarea class="cartoon-input text-xs py-1 px-2 bg-white text-slate-800 w-full resize-none h-12 animate-pop">${originalContent}</textarea>
+              <div class="flex gap-1.5 justify-end">
+                <button class="cancel-dm-edit text-[9px] font-bold text-slate-400 hover:underline">Cancel</button>
+                <button class="save-dm-edit text-[9px] font-bold text-purple-500 hover:underline">Save</button>
+              </div>
+            `;
+            contentPara.classList.add('hidden');
+            contentPara.after(editForm);
+            
+            editForm.querySelector('.cancel-dm-edit').addEventListener('click', () => {
+              editForm.remove();
+              contentPara.classList.remove('hidden');
+            });
+            
+            editForm.querySelector('.save-dm-edit').addEventListener('click', async () => {
+              const newText = editForm.querySelector('textarea').value.trim();
+              if (!newText) return showToast('⚠️', 'Message content cannot be empty.');
+              try {
+                await DB.updatePrivateMessage(chatId, msgId, newText);
+                showToast('✏️', 'Message updated!');
+              } catch (err) {
+                showToast('❌', 'Failed to update message.');
+              }
+            });
+          });
+        });
+
+        // Bind DM delete handlers
+        messagesContainer.querySelectorAll('.delete-dm-btn').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            const msgId = e.currentTarget.getAttribute('data-msg-id');
+            if (confirm('🗑️ Delete this message?')) {
+              try {
+                await DB.deletePrivateMessage(chatId, msgId);
+                showToast('🗑️', 'Message deleted.');
+              } catch (err) {
+                showToast('❌', 'Failed to delete message.');
+              }
+            }
+          });
+        });
+
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
       });
     }
@@ -1351,6 +1711,10 @@
     document.addEventListener('DOMContentLoaded', () => {
       window.addEventListener('error', (e) => { showToast('❌ Error', e.message || 'Error occurred.'); console.error(e); });
       checkUserProfile(); initFeedListener();
+
+      document.addEventListener('click', () => {
+        document.querySelectorAll('.post-dropdown').forEach(d => d.classList.add('hidden'));
+      });
 
       const btnFeed = document.getElementById('nav-feed'), btnCommunities = document.getElementById('nav-communities'), btnDms = document.getElementById('nav-dms');
       const screenFeed = document.getElementById('screen-feed'), screenComms = document.getElementById('screen-communities'), screenDms = document.getElementById('screen-dms'), screenActiveComm = document.getElementById('screen-active-community');
@@ -1426,12 +1790,11 @@
         });
       }
       document.getElementById('remove-feed-attachment-btn')?.addEventListener('click', () => { feedAttachedFile = null; document.getElementById('feed-attachment-preview')?.classList.add('hidden'); });
-
       document.getElementById('submit-post-btn').addEventListener('click', async (e) => {
         if (!postTextarea.value.trim() && !feedAttachedFile) return showToast('⚠️', 'Write something or attach a file!'); if (!currentUser) return checkUserProfile();
         e.currentTarget.disabled = true;
         try {
-          await DB.addPost({ nickname: currentUser.nickname, avatar: currentUser.avatar, mood: selectedMood, emoji: selectedEmoji, content: postTextarea.value.trim(), file: feedAttachedFile });
+          await DB.addPost({ uid: currentUser.uid, nickname: currentUser.nickname, avatar: currentUser.avatar, mood: selectedMood, emoji: selectedEmoji, content: postTextarea.value.trim(), file: feedAttachedFile });
           postTextarea.value = ''; document.getElementById('char-counter').textContent = '0 / 280 characters'; feedAttachedFile = null; document.getElementById('feed-attachment-preview')?.classList.add('hidden');
         } catch (err) { showToast('❌', 'Error writing to timeline.'); } finally { e.currentTarget.disabled = false; }
       });
@@ -1453,7 +1816,7 @@
       const chatInput = document.getElementById('chat-input'), sendChatBtn = document.getElementById('send-chat-btn');
       const submitChat = async () => {
         const text = chatInput.value.trim(); if (!text || !activeCommunityId) return; if (!currentUser) return checkUserProfile();
-        try { await DB.addChatMessage(activeCommunityId, { nickname: currentUser.nickname, avatar: currentUser.avatar, content: text }); chatInput.value = ''; } catch (e) { }
+        try { await DB.addChatMessage(activeCommunityId, { uid: currentUser.uid, nickname: currentUser.nickname, avatar: currentUser.avatar, content: text }); chatInput.value = ''; } catch (e) { }
       };
       sendChatBtn.addEventListener('click', submitChat); chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitChat(); });
 
@@ -1464,7 +1827,7 @@
           commFileInput.disabled = true; document.getElementById('comm-upload-progress')?.classList.remove('hidden');
           try {
             const fileDetails = await uploadFileToTelegram(file);
-            await DB.addChatMessage(activeCommunityId, { nickname: currentUser.nickname, avatar: currentUser.avatar, content: '', file: fileDetails });
+            await DB.addChatMessage(activeCommunityId, { uid: currentUser.uid, nickname: currentUser.nickname, avatar: currentUser.avatar, content: '', file: fileDetails });
             showToast('📎', 'File shared!');
           } catch (err) { showToast('❌', err.message); } finally { commFileInput.disabled = false; commFileInput.value = ''; document.getElementById('comm-upload-progress')?.classList.add('hidden'); }
         });
