@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,13 +12,13 @@
       theme: {
         extend: {
           colors: {
-            cartoonYellow: '#fde047',  // Modern Flat Yellow 300
-            cartoonPink: '#f43f5e',    // Modern Flat Rose 500
-            cartoonBlue: '#38bdf8',    // Modern Flat Sky 400
-            cartoonGreen: '#10b981',   // Modern Flat Emerald 500
-            cartoonPurple: '#8b5cf6',  // Modern Flat Violet 500
-            cartoonOrange: '#f97316',  // Modern Flat Orange 500
-            cartoonDark: '#0f172a'     // Modern Flat Slate 900
+            cartoonYellow: '#fde047',
+            cartoonPink: '#f43f5e',
+            cartoonBlue: '#38bdf8',
+            cartoonGreen: '#10b981',
+            cartoonPurple: '#8b5cf6',
+            cartoonOrange: '#f97316',
+            cartoonDark: '#0f172a'
           },
           boxShadow: {
             cartoon: '0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05)',
@@ -31,33 +32,386 @@
       }
     }
   </script>
-  <!-- Custom stylesheet -->
-  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --primary-light: #e0e7ff;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --border-hover: #cbd5e1;
+
+      --mood-yellow-bg: #fefcf0;
+      --mood-yellow-border: #fef08a;
+      --mood-pink-bg: #fff1f2;
+      --mood-pink-border: #fecdd3;
+      --mood-blue-bg: #f0f9ff;
+      --mood-blue-border: #bae6fd;
+      --mood-green-bg: #f0fdf4;
+      --mood-green-border: #bbf7d0;
+      --mood-purple-bg: #faf5ff;
+      --mood-purple-border: #e9d5ff;
+      --mood-orange-bg: #fff7ed;
+      --mood-orange-border: #fed7aa;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    .sticky-sidebar {
+      position: sticky;
+      top: 24px;
+      max-height: calc(100vh - 48px);
+      overflow-y: auto;
+      scrollbar-width: none;
+    }
+
+    .sticky-sidebar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .cartoon-box {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .avatar-circle {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background-color: #f1f5f9;
+      border: 1px solid var(--border-color);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      flex-shrink: 0;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+    }
+
+    .avatar-circle-sm {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: #f1f5f9;
+      border: 1px solid var(--border-color);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .cartoon-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      user-select: none;
+      padding: 8px 16px;
+    }
+
+    .cartoon-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    .cartoon-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    .btn-yellow {
+      background-color: #fef08a;
+      color: #854d0e;
+      border-color: #fef08a;
+    }
+
+    .btn-yellow:hover {
+      background-color: #fde047;
+    }
+
+    .btn-blue {
+      background-color: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .btn-blue:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-green {
+      background-color: #10b981;
+      color: #ffffff;
+      border-color: #10b981;
+    }
+
+    .btn-green:hover {
+      background-color: #059669;
+    }
+
+    .btn-purple {
+      background-color: #8b5cf6;
+      color: #ffffff;
+      border-color: #8b5cf6;
+    }
+
+    .btn-purple:hover {
+      background-color: #7c3aed;
+    }
+
+    .btn-white {
+      background-color: #ffffff;
+      color: var(--text-main);
+      border-color: var(--border-color);
+    }
+
+    .btn-white:hover {
+      background-color: #f8fafc;
+      border-color: var(--border-hover);
+    }
+
+    .social-react-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.15s ease;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 9999px;
+    }
+
+    .social-react-btn:hover {
+      background-color: #f1f5f9;
+    }
+
+    .social-react-btn:active {
+      transform: scale(0.95);
+    }
+
+    .react-hugs:hover {
+      color: #e11d48;
+      background-color: #fff1f2;
+    }
+
+    .react-same:hover {
+      color: #059669;
+      background-color: #f0fdf4;
+    }
+
+    .react-support:hover {
+      color: #2563eb;
+      background-color: #eff6ff;
+    }
+
+    .react-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      opacity: 0.95;
+    }
+
+    .cartoon-input {
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-family: inherit;
+      font-weight: 500;
+      color: var(--text-main);
+      outline: none;
+      box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      transition: all 0.15s ease;
+      background-color: #ffffff;
+    }
+
+    .cartoon-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        transform: translateY(8px);
+        opacity: 0;
+      }
+
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes floatSubtle {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-4px);
+      }
+    }
+
+    .animate-float {
+      animation: floatSubtle 4s ease-in-out infinite;
+    }
+
+    .animate-bounce-slow {
+      animation: floatSubtle 3s ease-in-out infinite;
+    }
+
+    .animate-pop {
+      animation: fadeInUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .cartoon-checkbox {
+      position: relative;
+      width: 20px;
+      height: 20px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      cursor: pointer;
+      background-color: #ffffff;
+      transition: all 0.15s ease;
+    }
+
+    .cartoon-checkbox::after {
+      content: "✓";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff;
+      transition: all 0.15s ease;
+    }
+
+    .cartoon-checkbox.checked {
+      background-color: #10b981;
+      border-color: #10b981;
+    }
+
+    .cartoon-checkbox.checked::after {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .speech-bubble {
+      position: relative;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 10px 14px;
+      max-width: 85%;
+      display: inline-block;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    .speech-bubble-left {
+      background-color: #f1f5f9;
+      border-color: #f1f5f9;
+      color: var(--text-main);
+    }
+
+    .speech-bubble-right {
+      background-color: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .speech-bubble-right p,
+    .speech-bubble-purple p {
+      color: #ffffff !important;
+    }
+
+    .speech-bubble-purple {
+      background-color: #8b5cf6 !important;
+      border-color: #7c3aed !important;
+      color: #ffffff !important;
+    }
+
+    .nav-card {
+      transition: all 0.15s ease;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .nav-card:hover {
+      background-color: #f1f5f9;
+      color: var(--text-main);
+    }
+
+    .nav-card.active {
+      background-color: var(--primary-light);
+      color: var(--primary);
+    }
+  </style>
 </head>
+
 <body class="min-h-screen pb-20 md:pb-12 bg-[#f8fafc]">
 
-  <!-- MOBILE HEADER -->
-  <header class="flex md:hidden items-center justify-between px-4 py-3 bg-white border-b border-slate-100 sticky top-0 z-40">
+  <header
+    class="flex md:hidden items-center justify-between px-4 py-3 bg-white border-b border-slate-100 sticky top-0 z-40">
     <div class="flex items-center gap-2">
       <span class="text-2xl animate-float">🎈</span>
       <h1 class="text-xl font-extrabold text-slate-800">Mood<span class="text-indigo-600">Bubble</span></h1>
     </div>
-    
     <div class="flex items-center gap-3">
-      <!-- Mobile Profile button -->
-      <button id="mobile-profile-btn" class="w-8 h-8 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-base shadow-sm">
-        🦊
-      </button>
+      <button id="mobile-profile-btn"
+        class="w-8 h-8 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-base shadow-sm">🦊</button>
     </div>
   </header>
 
-  <!-- MAIN APP CONTAINER -->
   <main class="max-w-7xl mx-auto px-4 mt-6 grid grid-cols-12 gap-6 items-start">
-    
-    <!-- LEFT SIDEBAR: LOGO + NAVIGATION + PROFILE (Col-span 3) -->
+
     <aside class="col-span-12 md:col-span-3 sticky-sidebar hidden md:flex flex-col gap-6">
-      
-      <!-- LOGO HEADER -->
       <div class="flex items-center gap-3 px-2">
         <div class="text-3xl animate-float">🎈</div>
         <div>
@@ -67,28 +421,20 @@
           <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Student Diary & Hub</p>
         </div>
       </div>
-      
-      <!-- Navigation Menu -->
+
       <div class="cartoon-box p-4 bg-white flex flex-col gap-2">
         <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2.5 px-1">🧭 Menu</h2>
-        
         <button id="nav-feed" class="nav-card active w-full justify-start text-left gap-3 text-base">
-          <span>🎈</span>
-          <span class="font-bold">Public Diary</span>
+          <span>🎈</span><span class="font-bold">Public Diary</span>
         </button>
-        
         <button id="nav-communities" class="nav-card w-full justify-start text-left gap-3 text-base">
-          <span>🏫</span>
-          <span class="font-bold">Communities</span>
+          <span>🏫</span><span class="font-bold">Communities</span>
         </button>
-
         <button id="nav-dms" class="nav-card w-full justify-start text-left gap-3 text-base">
-          <span>💬</span>
-          <span class="font-bold">Direct Messages</span>
+          <span>💬</span><span class="font-bold">Direct Messages</span>
         </button>
       </div>
 
-      <!-- Current User Card Anchored in Left Sidebar -->
       <div id="user-profile-widget" class="hidden cartoon-box bg-white p-3 flex items-center justify-between gap-3">
         <div class="flex items-center gap-2 overflow-hidden">
           <span id="widget-avatar" class="avatar-circle-sm">🦊</span>
@@ -98,114 +444,106 @@
           </div>
         </div>
         <div class="flex items-center gap-2 shrink-0">
-          <button id="change-profile-btn" class="text-xs text-indigo-600 hover:text-indigo-700 hover:underline font-bold">Edit</button>
-          <button id="logout-btn" class="text-xs text-rose-500 hover:text-rose-600 hover:underline font-bold">Exit</button>
+          <button id="change-profile-btn"
+            class="text-xs text-indigo-600 hover:text-indigo-700 hover:underline font-bold">Edit</button>
+          <button id="logout-btn"
+            class="text-xs text-rose-500 hover:text-rose-600 hover:underline font-bold">Exit</button>
         </div>
       </div>
-      
     </aside>
 
-    <!-- CENTER PANEL: MAIN CONTENT (Col-span 6) -->
     <section class="col-span-12 md:col-span-9 lg:col-span-6 flex flex-col gap-6">
-      
-      <!-- ================= SCREEN 1: FEELINGS FEED ================= -->
+
+      <!-- FEED SCREEN -->
       <div id="screen-feed" class="flex flex-col gap-6">
-        
-        <!-- Post Create Form Box (Social Media Compose Style) -->
         <div class="cartoon-box p-4 bg-white border border-slate-200">
           <div class="flex gap-3">
-            <!-- User Avatar Left -->
             <span id="compose-avatar" class="avatar-circle">🦊</span>
-            
-            <!-- Compose Textarea Right -->
             <div class="flex-1 flex flex-col">
-              <textarea id="post-textarea" placeholder="What's on your mind? Share your struggles or wins..." class="w-full h-20 resize-none text-sm text-slate-800 placeholder-slate-400 outline-none border-b border-slate-100 py-1.5 focus:border-indigo-100 transition-colors" maxlength="280"></textarea>
-              
-              <!-- Mood Selector underneath textarea -->
+              <textarea id="post-textarea" placeholder="What's on your mind? Share your struggles or wins..."
+                class="w-full h-20 resize-none text-sm text-slate-800 placeholder-slate-400 outline-none border-b border-slate-100 py-1.5 focus:border-indigo-100 transition-colors"
+                maxlength="280"></textarea>
+
               <div class="mt-3">
                 <span class="text-[10px] font-semibold text-slate-400 block mb-2">How are you feeling?</span>
                 <div class="grid grid-cols-5 gap-1.5">
-                  <button class="mood-option cartoon-btn btn-white py-2 gap-1 rounded-lg border border-slate-100 hover:border-slate-200 hover:bg-slate-50 flex flex-col items-center justify-center" data-mood="excited" data-emoji="🥳">
-                    <span class="text-lg">🥳</span>
-                    <span class="text-[9px] font-bold text-slate-500">Excited</span>
+                  <button
+                    class="mood-option cartoon-btn btn-white py-2 gap-1 rounded-lg border border-slate-100 hover:border-slate-200 hover:bg-slate-50 flex flex-col items-center justify-center"
+                    data-mood="excited" data-emoji="🥳">
+                    <span class="text-lg">🥳</span><span class="text-[9px] font-bold text-slate-500">Excited</span>
                   </button>
-                  <button class="mood-option cartoon-btn btn-white py-2 gap-1 rounded-lg border border-slate-100 hover:border-slate-200 hover:bg-slate-50 flex flex-col items-center justify-center" data-mood="happy" data-emoji="😊">
-                    <span class="text-lg">😊</span>
-                    <span class="text-[9px] font-bold text-slate-500">Happy</span>
+                  <button
+                    class="mood-option cartoon-btn btn-white py-2 gap-1 rounded-lg border border-slate-100 hover:border-slate-200 hover:bg-slate-50 flex flex-col items-center justify-center"
+                    data-mood="happy" data-emoji="😊">
+                    <span class="text-lg">😊</span><span class="text-[9px] font-bold text-slate-500">Happy</span>
                   </button>
-                  <button class="mood-option cartoon-btn btn-white py-2 gap-1 rounded-lg border border-slate-100 hover:border-slate-200 hover:bg-slate-50 flex flex-col items-center justify-center" data-mood="tired" data-emoji="🥱">
-                    <span class="text-lg">🥱</span>
-                    <span class="text-[9px] font-bold text-slate-500">Tired</span>
+                  <button
+                    class="mood-option cartoon-btn btn-white py-2 gap-1 rounded-lg border border-slate-100 hover:border-slate-200 hover:bg-slate-50 flex flex-col items-center justify-center"
+                    data-mood="tired" data-emoji="🥱">
+                    <span class="text-lg">🥱</span><span class="text-[9px] font-bold text-slate-500">Tired</span>
                   </button>
-                  <button class="mood-option cartoon-btn btn-white py-2 gap-1 rounded-lg border border-slate-100 hover:border-slate-200 hover:bg-slate-50 flex flex-col items-center justify-center" data-mood="anxious" data-emoji="😰">
-                    <span class="text-lg">😰</span>
-                    <span class="text-[9px] font-bold text-slate-500">Anxious</span>
+                  <button
+                    class="mood-option cartoon-btn btn-white py-2 gap-1 rounded-lg border border-slate-100 hover:border-slate-200 hover:bg-slate-50 flex flex-col items-center justify-center"
+                    data-mood="anxious" data-emoji="😰">
+                    <span class="text-lg">😰</span><span class="text-[9px] font-bold text-slate-500">Anxious</span>
                   </button>
-                  <button class="mood-option cartoon-btn btn-white py-2 gap-1 rounded-lg border border-slate-100 hover:border-slate-200 hover:bg-slate-50 flex flex-col items-center justify-center" data-mood="moody" data-emoji="😒">
-                    <span class="text-lg">😒</span>
-                    <span class="text-[9px] font-bold text-slate-500">Moody</span>
+                  <button
+                    class="mood-option cartoon-btn btn-white py-2 gap-1 rounded-lg border border-slate-100 hover:border-slate-200 hover:bg-slate-50 flex flex-col items-center justify-center"
+                    data-mood="moody" data-emoji="😒">
+                    <span class="text-lg">😒</span><span class="text-[9px] font-bold text-slate-500">Moody</span>
                   </button>
                 </div>
               </div>
 
-              <!-- Attachment details and Progress bar -->
-              <div id="feed-upload-progress" class="hidden items-center gap-2 p-1.5 bg-indigo-50 border border-indigo-100 rounded-lg text-[10px] text-indigo-700 mt-2 shrink-0 animate-pulse">
-                <span class="animate-spin text-sm">🌀</span>
-                <span class="font-semibold flex-1">Uploading file to Cloud Storage...</span>
+              <div id="feed-upload-progress"
+                class="hidden items-center gap-2 p-1.5 bg-indigo-50 border border-indigo-100 rounded-lg text-[10px] text-indigo-700 mt-2 shrink-0 animate-pulse">
+                <span class="animate-spin text-sm">🌀</span><span class="font-semibold flex-1">Uploading file to Cloud
+                  Storage...</span>
               </div>
-              <div id="feed-attachment-preview" class="hidden items-center justify-between gap-2 p-2 bg-slate-50 border border-slate-200 rounded-lg mt-2 text-xs font-semibold">
+              <div id="feed-attachment-preview"
+                class="hidden items-center justify-between gap-2 p-2 bg-slate-50 border border-slate-200 rounded-lg mt-2 text-xs font-semibold">
                 <div class="flex items-center gap-1.5 overflow-hidden">
-                  <span id="feed-preview-icon">📄</span>
-                  <span id="feed-preview-name" class="truncate">filename.jpg</span>
+                  <span id="feed-preview-icon">📄</span><span id="feed-preview-name"
+                    class="truncate">filename.jpg</span>
                 </div>
-                <button type="button" id="remove-feed-attachment-btn" class="text-rose-500 hover:text-rose-600 font-bold px-1.5">✕</button>
+                <button type="button" id="remove-feed-attachment-btn"
+                  class="text-rose-500 hover:text-rose-600 font-bold px-1.5">✕</button>
               </div>
 
-              <!-- Character Counter & Post Trigger Button -->
               <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-100">
                 <div class="flex items-center gap-2">
-                  <label class="cartoon-btn btn-white px-3 py-1.5 text-xs cursor-pointer hover:bg-slate-50 shrink-0 flex items-center justify-center gap-1">
-                    <span>📎 Attach File</span>
-                    <input type="file" id="feed-file-input" class="hidden" />
+                  <label
+                    class="cartoon-btn btn-white px-3 py-1.5 text-xs cursor-pointer hover:bg-slate-50 shrink-0 flex items-center justify-center gap-1">
+                    <span>📎 Attach File</span><input type="file" id="feed-file-input" class="hidden" />
                   </label>
                   <span id="char-counter" class="text-xs text-slate-400">0 / 280 characters</span>
                 </div>
                 <button id="submit-post-btn" class="cartoon-btn btn-blue px-4 py-1.5 text-xs gap-2 rounded-full">
-                  <span>Post</span>
-                  <span>🚀</span>
+                  <span>Post</span><span>🚀</span>
                 </button>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Feed List Section -->
         <div>
           <div class="flex items-center justify-between mb-4 px-2">
             <h2 class="text-base font-bold flex items-center gap-2 text-slate-800">
               <span>🎈</span> Student Diary Feed
             </h2>
-            <div class="text-[10px] font-semibold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">
-              Real-Time
-            </div>
+            <div class="text-[10px] font-semibold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">Real-Time</div>
           </div>
-          
-          <!-- Feed Posts List -->
           <div id="posts-container" class="flex flex-col gap-3">
-            <!-- Loading indicator -->
             <div class="cartoon-box p-8 bg-white text-center">
               <div class="text-2xl animate-spin mb-2 inline-block">🌀</div>
               <p class="font-bold text-slate-400 text-sm">Loading timeline...</p>
             </div>
           </div>
         </div>
-
       </div>
 
-      <!-- ================= SCREEN 2: COMMUNITIES LIST ================= -->
+      <!-- COMMUNITIES LIST SCREEN -->
       <div id="screen-communities" class="hidden flex flex-col gap-6">
-        
-        <!-- Header & Action -->
         <div class="flex items-center justify-between gap-4">
           <div>
             <h2 class="text-xl font-bold flex items-center gap-2 text-slate-800">
@@ -214,26 +552,19 @@
             <p class="text-xs text-slate-400">Join study boards, chat, and collaborate.</p>
           </div>
           <button id="open-create-community-btn" class="cartoon-btn btn-green px-3 py-1.5 text-xs gap-1.5">
-            <span>New Community</span>
-            <span>➕</span>
+            <span>New Community</span><span>➕</span>
           </button>
         </div>
-
-        <!-- Community Grid -->
         <div id="communities-grid" class="grid grid-cols-1 gap-4">
-          <!-- Loading indicator -->
           <div class="cartoon-box p-8 bg-white text-center">
             <div class="text-2xl animate-spin mb-2 inline-block">🌀</div>
             <p class="font-bold text-slate-400 text-sm">Loading communities...</p>
           </div>
         </div>
-
       </div>
 
-      <!-- ================= SCREEN 4: DIRECT MESSAGES (DMs & FRIENDS) ================= -->
+      <!-- DIRECT MESSAGES SCREEN -->
       <div id="screen-dms" class="hidden flex flex-col gap-4">
-        
-        <!-- DMs Top Banner -->
         <div class="cartoon-box p-4 bg-purple-50/50 border border-purple-100 flex justify-between items-center gap-4">
           <div class="flex items-center gap-3 overflow-hidden">
             <span class="text-2xl p-1.5 bg-white border border-slate-200 rounded-lg shrink-0">💬</span>
@@ -243,53 +574,43 @@
             </div>
           </div>
         </div>
-
-        <!-- Columns layout: Chat and Friends Directory -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
-          
-          <!-- Column 1: Friends and Conversations (Col-span 5) -->
           <div class="lg:col-span-5 flex flex-col gap-4">
-            <!-- Active Conversations card -->
             <div class="cartoon-box p-4 bg-white flex flex-col h-[250px]">
-              <h3 class="text-xs font-extrabold uppercase text-slate-400 tracking-wider border-b border-slate-100 pb-2 mb-2 flex justify-between items-center">
+              <h3
+                class="text-xs font-extrabold uppercase text-slate-400 tracking-wider border-b border-slate-100 pb-2 mb-2 flex justify-between items-center">
                 <span>💬 Conversations</span>
-                <span id="dm-unread-badge" class="bg-indigo-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full hidden">0</span>
+                <span id="dm-unread-badge"
+                  class="bg-indigo-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full hidden">0</span>
               </h3>
               <div id="dm-conversations-list" class="flex-1 overflow-y-auto flex flex-col gap-2">
-                <div class="text-center py-8 text-xs text-slate-400 font-semibold">
-                  No active chats yet. Find friends below to start a chat!
-                </div>
+                <div class="text-center py-8 text-xs text-slate-400 font-semibold">No active chats yet. Find friends
+                  below to start a chat!</div>
               </div>
             </div>
-
-            <!-- Friends Directory and Requests card -->
             <div class="cartoon-box p-4 bg-white flex flex-col h-[280px]">
-              <h3 class="text-xs font-extrabold uppercase text-slate-400 tracking-wider border-b border-slate-100 pb-2 mb-2 flex justify-between items-center">
+              <h3
+                class="text-xs font-extrabold uppercase text-slate-400 tracking-wider border-b border-slate-100 pb-2 mb-2 flex justify-between items-center">
                 <span>👥 Friends & Users</span>
-                <span id="friend-requests-badge" class="bg-rose-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full hidden">0</span>
+                <span id="friend-requests-badge"
+                  class="bg-rose-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full hidden">0</span>
               </h3>
-              
-              <!-- Search box -->
-              <input type="text" id="find-friends-input" placeholder="Search users by name..." class="cartoon-input py-1.5 px-3 text-[10px] w-full bg-slate-50 mb-2 border border-slate-200" />
-              
+              <input type="text" id="find-friends-input" placeholder="Search users by name..."
+                class="cartoon-input py-1.5 px-3 text-[10px] w-full bg-slate-50 mb-2 border border-slate-200" />
               <div id="friends-directory-list" class="flex-1 overflow-y-auto flex flex-col gap-2">
-                <div class="text-center py-8 text-xs text-slate-400 font-semibold">
-                  Loading user directory...
-                </div>
+                <div class="text-center py-8 text-xs text-slate-400 font-semibold">Loading user directory...</div>
               </div>
             </div>
           </div>
-
-          <!-- Column 2: Direct Chat Pane (Col-span 7) -->
           <div class="lg:col-span-7 cartoon-box p-4 bg-white flex flex-col h-[546px]" id="dm-chat-pane">
-            <div class="flex-1 flex flex-col items-center justify-center text-center text-slate-400 p-6" id="dm-chat-placeholder">
+            <div class="flex-1 flex flex-col items-center justify-center text-center text-slate-400 p-6"
+              id="dm-chat-placeholder">
               <span class="text-4xl mb-2">💬</span>
               <h3 class="font-bold text-slate-700 text-sm">Select a Conversation</h3>
-              <p class="text-xs text-slate-400 mt-1 max-w-xs leading-normal">Choose a friend from the conversations list, or add friends in the directory to start a private real-time chat.</p>
+              <p class="text-xs text-slate-400 mt-1 max-w-xs leading-normal">Choose a friend from the conversations
+                list, or add friends in the directory to start a private chat.</p>
             </div>
-
             <div class="flex-1 flex flex-col h-full hidden" id="dm-chat-active-window">
-              <!-- Active DM Chat Header -->
               <div class="flex items-center gap-2 pb-2 mb-3 border-b border-slate-100 shrink-0">
                 <span id="dm-active-avatar" class="avatar-circle-sm">🦊</span>
                 <div>
@@ -297,137 +618,102 @@
                   <span class="text-[9px] text-purple-500 font-bold block leading-none">🟢 Private Room</span>
                 </div>
               </div>
-
-              <!-- Message items -->
-              <div id="dm-messages-container" class="flex-1 overflow-y-auto pr-2 mb-3 flex flex-col gap-3">
-                <!-- Messages will load dynamically -->
+              <div id="dm-messages-container" class="flex-1 overflow-y-auto pr-2 mb-3 flex flex-col gap-3"></div>
+              <div id="dm-upload-progress"
+                class="hidden items-center gap-2 p-1.5 bg-indigo-50 border border-indigo-100 rounded-lg text-[10px] text-indigo-700 mb-2 shrink-0 animate-pulse">
+                <span class="animate-spin text-sm">🌀</span><span class="font-semibold flex-1">Uploading file to Cloud
+                  Storage...</span>
               </div>
-
-              <!-- File Upload indicator -->
-              <div id="dm-upload-progress" class="hidden items-center gap-2 p-1.5 bg-indigo-50 border border-indigo-100 rounded-lg text-[10px] text-indigo-700 mb-2 shrink-0 animate-pulse">
-                <span class="animate-spin text-sm">🌀</span>
-                <span class="font-semibold flex-1">Uploading file to Cloud Storage...</span>
-              </div>
-
-              <!-- DM compose input bar -->
               <div class="flex items-center gap-2 shrink-0">
-                <!-- Paperclip icon for upload -->
-                <label class="cartoon-btn btn-white p-2 text-sm cursor-pointer hover:bg-slate-50 shrink-0 flex items-center justify-center">
-                  <span>📎</span>
-                  <input type="file" id="dm-file-input" class="hidden" />
+                <label
+                  class="cartoon-btn btn-white p-2 text-sm cursor-pointer hover:bg-slate-50 shrink-0 flex items-center justify-center">
+                  <span>📎</span><input type="file" id="dm-file-input" class="hidden" />
                 </label>
-                
-                <input type="text" id="dm-chat-input" placeholder="Type a private message..." class="cartoon-input flex-1 py-1.5 px-3 text-xs" />
-                
-                <button id="send-dm-btn" class="cartoon-btn btn-purple px-3.5 py-1.5 text-xs gap-1">
-                  <span>Send</span>
-                </button>
+                <input type="text" id="dm-chat-input" placeholder="Type a private message..."
+                  class="cartoon-input flex-1 py-1.5 px-3 text-xs" />
+                <button id="send-dm-btn"
+                  class="cartoon-btn btn-purple px-3.5 py-1.5 text-xs gap-1"><span>Send</span></button>
               </div>
             </div>
           </div>
-
         </div>
+      </div>
 
-      <!-- ================= SCREEN 3: ACTIVE COMMUNITY (CHAT + TASKS) ================= -->
+      <!-- ACTIVE COMMUNITY SCREEN -->
       <div id="screen-active-community" class="hidden flex flex-col gap-4">
-        
-        <!-- Community Top Banner -->
-        <div id="community-header" class="cartoon-box p-4 bg-emerald-50/50 border border-emerald-100 flex justify-between items-center gap-4">
+        <div id="community-header"
+          class="cartoon-box p-4 bg-emerald-50/50 border border-emerald-100 flex justify-between items-center gap-4">
           <div class="flex items-center gap-3 overflow-hidden">
-            <div id="active-comm-icon" class="text-2xl p-1.5 bg-white border border-slate-200 rounded-lg shrink-0">📐</div>
+            <div id="active-comm-icon" class="text-2xl p-1.5 bg-white border border-slate-200 rounded-lg shrink-0">📐
+            </div>
             <div class="overflow-hidden">
               <h2 id="active-comm-name" class="text-base font-bold text-slate-800 truncate">Math 101 Help</h2>
-              <p id="active-comm-desc" class="text-xs text-slate-500 truncate mt-0.5">Need help with calculus or homework problems?</p>
+              <p id="active-comm-desc" class="text-xs text-slate-500 truncate mt-0.5">Need help with calculus or
+                homework problems?</p>
             </div>
           </div>
           <button id="leave-community-btn" class="cartoon-btn btn-white px-2.5 py-1.5 text-xs gap-1.5 shrink-0">
             <span>← Exit</span>
           </button>
         </div>
-
-        <!-- Columns layout: Chat and Tasks -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
-          
-          <!-- Column 1: Group Chat (Col-span 7) -->
           <div class="lg:col-span-7 cartoon-box p-4 bg-white flex flex-col h-[500px]">
             <h3 class="text-sm font-bold border-b border-slate-100 pb-2 mb-3 flex items-center gap-2 text-slate-800">
               <span>💬</span> Group Chat
             </h3>
-            
-            <!-- Messages Scrollable Container -->
-            <div id="chat-messages-container" class="flex-1 overflow-y-auto pr-2 mb-4 flex flex-col gap-3">
-              <!-- Example chat items -->
-            </div>
-
-            <!-- Chat input bar -->
-            <div id="comm-upload-progress" class="hidden items-center gap-2 p-1.5 bg-indigo-50 border border-indigo-100 rounded-lg text-[10px] text-indigo-700 mb-2 animate-pulse">
-              <span class="animate-spin text-sm">🌀</span>
-              <span class="font-semibold flex-1">Uploading file to Cloud Storage...</span>
+            <div id="chat-messages-container" class="flex-1 overflow-y-auto pr-2 mb-4 flex flex-col gap-3"></div>
+            <div id="comm-upload-progress"
+              class="hidden items-center gap-2 p-1.5 bg-indigo-50 border border-indigo-100 rounded-lg text-[10px] text-indigo-700 mb-2 animate-pulse">
+              <span class="animate-spin text-sm">🌀</span><span class="font-semibold flex-1">Uploading file to Cloud
+                Storage...</span>
             </div>
             <div class="flex gap-2 items-center">
-              <label class="cartoon-btn btn-white p-2 text-sm cursor-pointer hover:bg-slate-50 shrink-0 flex items-center justify-center">
-                <span>📎</span>
-                <input type="file" id="comm-file-input" class="hidden" />
+              <label
+                class="cartoon-btn btn-white p-2 text-sm cursor-pointer hover:bg-slate-50 shrink-0 flex items-center justify-center">
+                <span>📎</span><input type="file" id="comm-file-input" class="hidden" />
               </label>
-              <input type="text" id="chat-input" placeholder="Type a message to the group..." class="cartoon-input flex-1 py-1.5 px-3 text-xs" />
-              <button id="send-chat-btn" class="cartoon-btn btn-blue px-3 py-1.5 text-xs gap-1">
-                <span>Send</span>
-              </button>
+              <input type="text" id="chat-input" placeholder="Type a message to the group..."
+                class="cartoon-input flex-1 py-1.5 px-3 text-xs" />
+              <button id="send-chat-btn"
+                class="cartoon-btn btn-blue px-3 py-1.5 text-xs gap-1"><span>Send</span></button>
             </div>
           </div>
-
-          <!-- Column 2: Mission Board / Calendar (Col-span 5) -->
           <div class="lg:col-span-5 flex flex-col gap-4">
-            
-            <!-- Tasks List Card -->
             <div class="cartoon-box p-4 bg-white flex flex-col h-[280px]">
               <h3 class="text-sm font-bold border-b border-slate-100 pb-2 mb-3 flex items-center gap-2 text-slate-800">
                 <span>🎯</span> Mission Board
               </h3>
-              
-              <!-- Missions Scroll Area -->
-              <div id="missions-container" class="flex-1 overflow-y-auto pr-1 flex flex-col gap-2">
-                <!-- Tasks render here -->
-              </div>
+              <div id="missions-container" class="flex-1 overflow-y-auto pr-1 flex flex-col gap-2"></div>
             </div>
-
-            <!-- Add Task Form Card -->
             <div class="cartoon-box p-4 bg-orange-50/50 border border-orange-100/80">
               <h3 class="text-xs font-semibold text-orange-800 mb-2 flex items-center gap-1.5">
                 <span>➕</span> Create a Mission
               </h3>
               <form id="add-mission-form" class="flex flex-col gap-2 text-[10px]">
-                <input type="text" id="mission-title" placeholder="Mission Name" class="cartoon-input py-1.5 px-2.5 text-[10px] w-full bg-white" required>
-                
+                <input type="text" id="mission-title" placeholder="Mission Name"
+                  class="cartoon-input py-1.5 px-2.5 text-[10px] w-full bg-white" required>
                 <div class="grid grid-cols-1 gap-2">
-                  <select id="mission-type" class="cartoon-input py-1.5 px-2.5 text-[10px] bg-white font-medium text-slate-700">
+                  <select id="mission-type"
+                    class="cartoon-input py-1.5 px-2.5 text-[10px] bg-white font-medium text-slate-700">
                     <option value="📚 Study">📚 Study Session</option>
                     <option value="🎯 Goal">🎯 Goal</option>
                     <option value="📅 Meetup">📅 Meetup</option>
                     <option value="📝 Exam">📝 Exam Prep</option>
                   </select>
-                  <input type="date" id="mission-date" class="cartoon-input py-1.5 px-2.5 text-[10px] bg-white font-medium text-slate-700" required>
+                  <input type="date" id="mission-date"
+                    class="cartoon-input py-1.5 px-2.5 text-[10px] bg-white font-medium text-slate-700" required>
                 </div>
-                
                 <button type="submit" class="cartoon-btn btn-white py-1.5 font-semibold text-[10px] w-full mt-1">
                   Add Mission 🚀
                 </button>
               </form>
             </div>
-
           </div>
-
         </div>
-
       </div>
-
     </section>
 
-    <!-- RIGHT SIDEBAR: HASHTAGS + DB + TIP (Col-span 3) -->
     <aside class="col-span-12 lg:col-span-3 sticky-sidebar hidden lg:flex flex-col gap-6">
-      
-
-      <!-- TRENDING SOCIAL MODES (Hashtags) -->
       <div class="cartoon-box p-4 bg-white flex flex-col gap-3">
         <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">🔥 Trending Topics</h3>
         <div class="flex flex-col gap-2.5">
@@ -453,56 +739,51 @@
           </div>
         </div>
       </div>
-
-      <!-- Quick Tips Card -->
       <div class="cartoon-box p-4 bg-sky-50/50 border border-sky-100/80">
         <h3 class="text-xs font-bold text-sky-800 mb-1 flex items-center gap-1.5">
           <span>📣</span> Bubble Tip
         </h3>
         <p class="text-[11px] font-medium leading-relaxed text-sky-950">
-          Every feeling shared helps other students know they aren't alone. Create study groups to collaborate in real-time!
+          Every feeling shared helps other students know they aren't alone. Create study groups to collaborate in
+          real-time!
         </p>
       </div>
-
     </aside>
-
   </main>
 
-  <!-- ================= POPUP MODAL: USER ACCOUNT INITIALIZATION ================= -->
-  <div id="auth-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+  <div id="auth-modal"
+    class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="cartoon-box p-6 md:p-8 bg-white max-w-md w-full animate-pop">
       <div class="text-center mb-6">
         <span class="text-4xl animate-bounce-slow inline-block mb-2">👋</span>
         <h2 class="text-2xl font-bold text-slate-800">Welcome Student!</h2>
         <p class="text-xs text-slate-500 mt-1">Set up your nickname & avatar to start chatting and journaling.</p>
       </div>
-
       <div class="flex flex-col gap-4">
-        <!-- Google Login Button -->
-        <button id="google-login-btn" class="cartoon-btn btn-white py-2 w-full flex items-center justify-center gap-2 border border-slate-200 hover:bg-slate-50 rounded-lg">
+        <button id="google-login-btn"
+          class="cartoon-btn btn-white py-2 w-full flex items-center justify-center gap-2 border border-slate-200 hover:bg-slate-50 rounded-lg">
           <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24">
-            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.56-2.77c-.98.66-2.23 1.06-3.72 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            <path fill="#4285F4"
+              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+            <path fill="#34A853"
+              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.56-2.77c-.98.66-2.23 1.06-3.72 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+            <path fill="#FBBC05"
+              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+            <path fill="#EA4335"
+              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
           </svg>
           <span class="font-semibold text-xs text-slate-700">Continue with Google</span>
         </button>
-
-        <!-- OR Divider -->
         <div class="flex items-center">
           <hr class="flex-1 border-slate-100">
           <span class="text-[9px] text-slate-400 px-3 font-semibold uppercase tracking-wider select-none">Or</span>
           <hr class="flex-1 border-slate-100">
         </div>
-
-        <!-- Nickname Input -->
         <div class="flex flex-col gap-1.5">
           <label for="input-nickname" class="text-xs font-semibold text-slate-600">Create a Cute Nickname:</label>
-          <input type="text" id="input-nickname" placeholder="e.g. StudiousFrog, CodingKitten" class="cartoon-input w-full text-sm" maxlength="20" required>
+          <input type="text" id="input-nickname" placeholder="e.g. StudiousFrog, CodingKitten"
+            class="cartoon-input w-full text-sm" maxlength="20" required>
         </div>
-
-        <!-- Avatar Selection -->
         <div class="flex flex-col gap-2">
           <label class="text-xs font-semibold text-slate-600">Choose Your Sticker Avatar:</label>
           <div class="grid grid-cols-4 gap-2.5" id="avatar-grid">
@@ -516,47 +797,41 @@
             <button class="avatar-option cartoon-btn btn-white py-2 text-2xl rounded-lg" data-avatar="🦖">🦖</button>
           </div>
         </div>
-
-        <!-- Custom Avatar Upload -->
         <div class="flex flex-col gap-1.5 mt-2">
           <label class="text-xs font-semibold text-slate-600">Or Upload a Custom Photo:</label>
           <div class="flex items-center gap-3">
-            <div id="custom-avatar-preview" class="w-12 h-12 rounded-full border border-slate-200 bg-slate-50 flex items-center justify-center text-xs text-slate-400 shrink-0 overflow-hidden">
+            <div id="custom-avatar-preview"
+              class="w-12 h-12 rounded-full border border-slate-200 bg-slate-50 flex items-center justify-center text-xs text-slate-400 shrink-0 overflow-hidden">
               <span>None</span>
             </div>
-            
-            <label class="cartoon-btn btn-white py-1.5 px-3 text-xs cursor-pointer hover:bg-slate-50 shrink-0 flex items-center justify-center gap-1.5 font-bold">
-              <span>🖼️ Choose Photo</span>
-              <input type="file" id="input-avatar-file" class="hidden" accept="image/*" />
+            <label
+              class="cartoon-btn btn-white py-1.5 px-3 text-xs cursor-pointer hover:bg-slate-50 shrink-0 flex items-center justify-center gap-1.5 font-bold">
+              <span>🖼️ Choose Photo</span><input type="file" id="input-avatar-file" class="hidden" accept="image/*" />
             </label>
-            
-            <span id="avatar-upload-status" class="text-[10px] text-indigo-600 font-bold hidden animate-pulse">Uploading...</span>
+            <span id="avatar-upload-status"
+              class="text-[10px] text-indigo-600 font-bold hidden animate-pulse">Uploading...</span>
           </div>
         </div>
-
-
-        <!-- Save Button -->
-        <button id="save-profile-btn" class="cartoon-btn btn-yellow py-2 text-sm font-semibold w-full mt-2">
-          Let's Go! 🚀
-        </button>
+        <button id="save-profile-btn" class="cartoon-btn btn-yellow py-2 text-sm font-semibold w-full mt-2">Let's Go!
+          🚀</button>
       </div>
     </div>
   </div>
 
-  <!-- ================= POPUP MODAL: CREATE COMMUNITY ================= -->
-  <div id="create-community-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+  <div id="create-community-modal"
+    class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="cartoon-box p-6 bg-white max-w-md w-full animate-pop">
       <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-2">
         <h2 class="text-lg font-bold text-slate-800">🏫 Create Community</h2>
-        <button id="close-create-comm-btn" class="text-xs font-semibold text-slate-400 hover:text-slate-600">Cancel</button>
+        <button id="close-create-comm-btn"
+          class="text-xs font-semibold text-slate-400 hover:text-slate-600">Cancel</button>
       </div>
-
       <form id="create-community-form" class="flex flex-col gap-4">
         <div class="flex flex-col gap-1">
           <label for="comm-name" class="text-xs font-semibold text-slate-600">Group Name:</label>
-          <input type="text" id="comm-name" placeholder="e.g. Science Olympiad Squad" class="cartoon-input w-full text-sm" required>
+          <input type="text" id="comm-name" placeholder="e.g. Science Olympiad Squad"
+            class="cartoon-input w-full text-sm" required>
         </div>
-
         <div class="flex flex-col gap-1">
           <label for="comm-icon" class="text-xs font-semibold text-slate-600">Group Emoji Icon:</label>
           <select id="comm-icon" class="cartoon-input w-full bg-white text-sm font-semibold text-slate-700">
@@ -570,49 +845,658 @@
             <option value="🦖">🦖 Dino Club</option>
           </select>
         </div>
-
         <div class="flex flex-col gap-1">
           <label for="comm-desc" class="text-xs font-semibold text-slate-600">Short Description:</label>
-          <textarea id="comm-desc" placeholder="What is this group all about?" class="cartoon-input w-full h-20 resize-none text-sm" required></textarea>
+          <textarea id="comm-desc" placeholder="What is this group all about?"
+            class="cartoon-input w-full h-20 resize-none text-sm" required></textarea>
         </div>
-
         <div class="flex flex-col gap-1">
-          <label for="comm-code" class="text-xs font-semibold text-slate-600">Access Code (Optional - leave blank for public):</label>
+          <label for="comm-code" class="text-xs font-semibold text-slate-600">Access Code (Optional - leave blank for
+            public):</label>
           <input type="text" id="comm-code" placeholder="e.g. 1234, STUDY" class="cartoon-input w-full text-sm">
         </div>
-
-        <button type="submit" class="cartoon-btn btn-green py-2 text-sm font-semibold w-full mt-2">
-          Create Community 🎉
-        </button>
+        <button type="submit" class="cartoon-btn btn-green py-2 text-sm font-semibold w-full mt-2">Create Community
+          🎉</button>
       </form>
     </div>
   </div>
 
-
-  <!-- Notification Popup Toast -->
-  <div id="toast" class="fixed bottom-6 right-6 cartoon-box p-3 bg-slate-900 border-slate-950 text-white font-semibold shadow-lg text-sm rounded-lg transition-all duration-300 transform translate-y-24 opacity-0 z-50 flex items-center gap-2">
-    <span id="toast-icon">✨</span>
-    <span id="toast-message">Feeling shared successfully!</span>
+  <div id="toast"
+    class="fixed bottom-6 right-6 cartoon-box p-3 bg-slate-900 border-slate-950 text-white font-semibold shadow-lg text-sm rounded-lg transition-all duration-300 transform translate-y-24 opacity-0 z-50 flex items-center gap-2">
+    <span id="toast-icon">✨</span><span id="toast-message">Notification</span>
   </div>
 
-  <!-- MOBILE BOTTOM NAVIGATION -->
-  <nav class="flex md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 py-2 px-6 justify-around items-center z-40 shadow-lg">
+  <nav
+    class="flex md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 py-2 px-6 justify-around items-center z-40 shadow-lg">
     <button id="mobile-nav-feed" class="flex flex-col items-center gap-0.5 text-indigo-600">
-      <span class="text-xl">🎈</span>
-      <span class="text-[9px] font-bold">Feed</span>
+      <span class="text-xl">🎈</span><span class="text-[9px] font-bold">Feed</span>
     </button>
     <button id="mobile-nav-communities" class="flex flex-col items-center gap-0.5 text-slate-400">
-      <span class="text-xl">🏫</span>
-      <span class="text-[9px] font-bold">Groups</span>
+      <span class="text-xl">🏫</span><span class="text-[9px] font-bold">Groups</span>
     </button>
     <button id="mobile-nav-dms" class="flex flex-col items-center gap-0.5 text-slate-400">
-      <span class="text-xl">💬</span>
-      <span class="text-[9px] font-bold">DMs</span>
+      <span class="text-xl">💬</span><span class="text-[9px] font-bold">DMs</span>
     </button>
-
   </nav>
 
-  <!-- Load core javascript as module -->
-  <script type="module" src="app.js"></script>
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+    import {
+      getFirestore, collection, addDoc, onSnapshot, query, orderBy, limit, doc, updateDoc, increment, getDocs, setDoc, where
+    } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+    import {
+      getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged
+    } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+
+    // ==========================================
+    // DATA CONTROLLER INTERFACE (FIRESTORE)
+    // ==========================================
+    const DB = {
+      db: null,
+      auth: null,
+      async addPost(postData) { await addDoc(collection(this.db, 'posts'), { ...postData, timestamp: Date.now(), reactions: { hugs: 0, same: 0, support: 0 } }); },
+      listenPosts(callback) {
+        const q = query(collection(this.db, 'posts'), orderBy('timestamp', 'desc'));
+        return onSnapshot(q, (snapshot) => { const posts = []; snapshot.forEach(doc => posts.push({ id: doc.id, ...doc.data() })); callback(posts); }, (err) => console.error("Firestore error:", err));
+      },
+      async addReaction(postId, reactionType) {
+        const ref = doc(this.db, 'posts', postId); const updates = {}; updates[`reactions.${reactionType}`] = increment(1); await updateDoc(ref, updates);
+      },
+      async addCommunity(commData) { await addDoc(collection(this.db, 'communities'), { ...commData, timestamp: Date.now() }); },
+      listenCommunities(callback) {
+        const q = query(collection(this.db, 'communities'), orderBy('timestamp', 'desc'));
+        return onSnapshot(q, (snapshot) => { const comms = []; snapshot.forEach(doc => comms.push({ id: doc.id, ...doc.data() })); callback(comms); });
+      },
+      async addChatMessage(commId, msgData) { await addDoc(collection(this.db, 'communities', commId, 'messages'), { ...msgData, timestamp: Date.now() }); },
+      listenChatMessages(commId, callback) {
+        const q = query(collection(this.db, 'communities', commId, 'messages'), orderBy('timestamp', 'asc'));
+        return onSnapshot(q, (snapshot) => { const messages = []; snapshot.forEach(doc => messages.push({ id: doc.id, ...doc.data() })); callback(messages); });
+      },
+      async addTask(commId, taskData) { await addDoc(collection(this.db, 'communities', commId, 'tasks'), { ...taskData, completed: false, completedBy: null, timestamp: Date.now() }); },
+      listenTasks(commId, callback) {
+        const q = query(collection(this.db, 'communities', commId, 'tasks'), orderBy('dueDate', 'asc'));
+        return onSnapshot(q, (snapshot) => { const tasks = []; snapshot.forEach(doc => tasks.push({ id: doc.id, ...doc.data() })); callback(tasks); });
+      },
+      async toggleTask(commId, taskId, completedStatus, completedBy) {
+        const ref = doc(this.db, 'communities', commId, 'tasks', taskId);
+        await updateDoc(ref, { completed: completedStatus, completedBy: completedStatus ? completedBy : null });
+      },
+      listenUsers(callback) {
+        const q = query(collection(this.db, 'users'), limit(150));
+        return onSnapshot(q, (snapshot) => { const users = []; snapshot.forEach(doc => users.push(doc.data())); callback(users); });
+      },
+      listenFriendships(uid, callback) {
+        const q = query(collection(this.db, 'friendships'), where('users', 'array-contains', uid));
+        return onSnapshot(q, (snapshot) => { const friendships = []; snapshot.forEach(doc => friendships.push({ id: doc.id, ...doc.data() })); callback(friendships); });
+      },
+      async sendFriendRequest(myUid, targetUid) {
+        const friendshipId = myUid < targetUid ? `${myUid}_${targetUid}` : `${targetUid}_${myUid}`;
+        const ref = doc(this.db, 'friendships', friendshipId);
+        await setDoc(ref, { id: friendshipId, users: [myUid, targetUid], status: 'pending', senderId: myUid, timestamp: Date.now() }, { merge: true });
+      },
+      async acceptFriendRequest(myUid, targetUid) {
+        const friendshipId = myUid < targetUid ? `${myUid}_${targetUid}` : `${targetUid}_${myUid}`;
+        const ref = doc(this.db, 'friendships', friendshipId); await updateDoc(ref, { status: 'accepted', timestamp: Date.now() });
+      },
+      async sendPrivateMessage(chatId, msgData) { await addDoc(collection(this.db, 'private_chats', chatId, 'messages'), { ...msgData, timestamp: Date.now() }); },
+      listenPrivateMessages(chatId, callback) {
+        const q = query(collection(this.db, 'private_chats', chatId, 'messages'), orderBy('timestamp', 'asc'));
+        return onSnapshot(q, (snapshot) => { const messages = []; snapshot.forEach(doc => messages.push({ id: doc.id, ...doc.data() })); callback(messages); });
+      }
+    };
+
+    let currentUser = null; let activeCommunityId = null; let activeUnsubscribes = [];
+    let allUsers = []; let allFriendships = []; let activeDmFriendshipId = null; let activeDmFriend = null;
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDz2i7hTTYHsyYUhCEVgcBMFoyHPOR-_xQ",
+      authDomain: "moodbubble-app.firebaseapp.com",
+      projectId: "moodbubble-app",
+      storageBucket: "moodbubble-app.firebasestorage.app",
+      messagingSenderId: "213725501252",
+      appId: "1:213725501252:web:3580ad891388a9f5e1e911"
+    };
+
+    const app = initializeApp(firebaseConfig); DB.db = getFirestore(app); DB.auth = getAuth(app);
+
+    // ==========================================
+    // UTILITY FUNCTIONS
+    // ==========================================
+    function cleanupListeners() {
+      activeUnsubscribes.forEach(unsub => {
+        if (typeof unsub === 'function') unsub();
+      });
+      activeUnsubscribes = [];
+    }
+
+    function showToast(icon, message) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-icon').textContent = icon; document.getElementById('toast-message').textContent = message;
+      toast.classList.remove('translate-y-24', 'opacity-0'); toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => { toast.classList.remove('translate-y-0', 'opacity-100'); toast.classList.add('translate-y-24', 'opacity-0'); }, 3000);
+    }
+
+    function renderAvatarHTML(avatar, sizeClass = 'avatar-circle') {
+      if (!avatar) avatar = '🦊';
+      const isUrl = avatar.startsWith('http://') || avatar.startsWith('https://');
+      return isUrl ? `<span class="${sizeClass} overflow-hidden bg-slate-100 flex items-center justify-center border border-slate-200"><img src="${avatar}" class="w-full h-full object-cover rounded-full" /></span>` : `<span class="${sizeClass}">${avatar}</span>`;
+    }
+
+    function setAvatarElement(element, avatar) {
+      if (!element) return;
+      if (!avatar) avatar = '🦊';
+      const isUrl = avatar.startsWith('http://') || avatar.startsWith('https://');
+      element.innerHTML = '';
+      if (isUrl) {
+        element.classList.add('overflow-hidden', 'bg-slate-100', 'flex', 'items-center', 'justify-center', 'border', 'border-slate-200');
+        const img = document.createElement('img'); img.src = avatar; img.className = 'w-full h-full object-cover rounded-full'; element.appendChild(img);
+      } else {
+        element.classList.remove('overflow-hidden', 'bg-slate-100', 'flex', 'items-center', 'justify-center', 'border', 'border-slate-200');
+        element.textContent = avatar;
+      }
+    }
+
+    function formatTime(timestamp) {
+      if (!timestamp) return 'Just now'; const diff = Date.now() - timestamp;
+      if (diff < 60000) return 'Just now'; const mins = Math.floor(diff / 60000);
+      if (mins < 60) return `${mins}m ago`; const hours = Math.floor(mins / 60);
+      if (hours < 24) return `${hours}h ago`; return `${Math.floor(hours / 24)}d ago`;
+    }
+
+    async function uploadFileToTelegram(file) {
+      const botToken = localStorage.getItem('moodbubble_tg_token') || "8814332884:AAEbI2UlM0WouNuEamtwyHYTTeY-UnvWWcY";
+      const chatId = localStorage.getItem('moodbubble_tg_chat_id') || "-5277905163";
+      if (!botToken || !chatId) throw new Error("Cloud storage credentials are not configured!");
+      if (file.size > 40 * 1024 * 1024) throw new Error("File size exceeds 40MB limit!");
+      const formData = new FormData(); formData.append('chat_id', chatId); formData.append('document', file);
+      const response = await fetch(`https://api.telegram.org/bot${botToken}/sendDocument`, { method: 'POST', body: formData });
+      if (!response.ok) throw new Error(`Upload API responded with ${response.status}`);
+      const data = await response.json(); if (!data.ok) throw new Error(`Upload server error: ${data.description}`);
+      const docData = data.result.document; if (!docData) throw new Error("Upload failed.");
+      const pathData = await (await fetch(`https://api.telegram.org/bot${botToken}/getFile?file_id=${docData.file_id}`)).json();
+      if (!pathData.ok) throw new Error(`Path retrieval error: ${pathData.description}`);
+      return { url: `https://api.telegram.org/file/bot${botToken}/${pathData.result.file_path}`, name: docData.file_name || file.name, type: docData.mime_type || file.type, size: docData.file_size || file.size };
+    }
+
+    function renderFileAttachment(file, isMe = false) {
+      const container = document.createElement('div'); container.className = 'mt-2 select-text';
+      if (file.type && file.type.startsWith('image/')) {
+        const img = document.createElement('img'); img.src = file.url; img.loading = 'lazy';
+        img.className = 'max-h-48 w-auto object-contain cursor-pointer rounded border border-slate-200/50 bg-white mt-1';
+        img.onclick = () => window.open(file.url, '_blank'); container.appendChild(img);
+      } else if (file.type && file.type.startsWith('video/')) {
+        const video = document.createElement('video'); video.src = file.url; video.controls = true;
+        video.className = 'max-h-48 w-full object-contain rounded border border-slate-200/50 bg-white mt-1'; container.appendChild(video);
+      } else {
+        const card = document.createElement('div');
+        card.className = isMe ? 'flex items-center gap-2 p-2 bg-purple-600/55 border border-purple-700/50 rounded text-[10px] text-white max-w-xs mt-1' : 'flex items-center gap-2 p-2 bg-slate-50 border border-slate-200/60 rounded text-[10px] text-slate-700 max-w-xs mt-1';
+        card.innerHTML = `<span>📄</span><a href="${file.url}" target="_blank" class="underline font-semibold truncate flex-1 ${isMe ? 'hover:text-purple-200' : 'hover:text-indigo-600'}">${file.name || 'Attached File'}</a>`;
+        if (file.size) card.innerHTML += `<span class="${isMe ? 'text-[8px] text-purple-200 shrink-0' : 'text-[8px] text-slate-400 shrink-0'}">(${(file.size / 1024 / 1024).toFixed(2)} MB)</span>`;
+        container.appendChild(card);
+      }
+      return container;
+    }
+
+    // ==========================================
+    // USER PROFILE & AUTH
+    // ==========================================
+    async function syncUserProfile(uid, nickname, avatar) {
+      if (!DB.db) return;
+      try { await setDoc(doc(DB.db, 'users', uid), { uid, nickname, avatar, lastActive: Date.now() }, { merge: true }); } catch (err) { console.error(err); }
+    }
+
+    function checkUserProfile() {
+      const localProfile = localStorage.getItem('moodbubble_user');
+      if (localProfile) {
+        currentUser = JSON.parse(localProfile);
+        if (!currentUser.uid) {
+          let guestUid = localStorage.getItem('moodbubble_uid') || 'guest_' + Math.random().toString(36).substr(2, 9);
+          localStorage.setItem('moodbubble_uid', guestUid); currentUser.uid = guestUid; localStorage.setItem('moodbubble_user', JSON.stringify(currentUser));
+        }
+        setAvatarElement(document.getElementById('widget-avatar'), currentUser.avatar);
+        document.getElementById('widget-nickname').textContent = currentUser.nickname;
+        document.getElementById('widget-handle').textContent = `@${currentUser.nickname.toLowerCase().replace(/\s+/g, '')}`;
+        setAvatarElement(document.getElementById('compose-avatar'), currentUser.avatar);
+        setAvatarElement(document.getElementById('mobile-profile-btn'), currentUser.avatar);
+        document.getElementById('user-profile-widget').classList.remove('hidden'); document.getElementById('auth-modal').classList.add('hidden');
+        syncUserProfile(currentUser.uid, currentUser.nickname, currentUser.avatar);
+      } else {
+        document.getElementById('user-profile-widget').classList.add('hidden'); document.getElementById('auth-modal').classList.remove('hidden');
+      }
+    }
+
+    async function saveUserProfile(nickname, avatar) {
+      const trimmed = nickname.trim(); if (!trimmed) return;
+      let uid = localStorage.getItem('moodbubble_uid') || 'guest_' + Math.random().toString(36).substr(2, 9);
+      if (DB.auth && DB.auth.currentUser) uid = DB.auth.currentUser.uid;
+      localStorage.setItem('moodbubble_uid', uid); currentUser = { uid, nickname: trimmed, avatar };
+      localStorage.setItem('moodbubble_user', JSON.stringify(currentUser)); checkUserProfile(); showToast('🎉', `Welcome aboard, ${trimmed}!`);
+      await syncUserProfile(uid, trimmed, avatar);
+    }
+
+    onAuthStateChanged(DB.auth, (user) => {
+      if (user) { currentUser = { uid: user.uid, nickname: user.displayName || 'Google Student', avatar: '🎓' }; localStorage.setItem('moodbubble_user', JSON.stringify(currentUser)); checkUserProfile(); }
+    });
+
+
+    // ==========================================
+    // SCREEN LISTENERS
+    // ==========================================
+    let selectedMood = 'happy'; let selectedEmoji = '😊';
+    function selectMoodOption(element, mood, emoji) {
+      document.querySelectorAll('.mood-option').forEach(btn => {
+        btn.className = 'mood-option cartoon-btn btn-white flex-col py-3.5 gap-1.5 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50';
+        const span = btn.querySelector('span.text-2xl'); if (span) span.classList.remove('animate-bounce-slow');
+      });
+      element.className = 'mood-option cartoon-btn btn-yellow flex-col py-3.5 gap-1.5 rounded-lg border-yellow-300';
+      const selectedSpan = element.querySelector('span.text-2xl'); if (selectedSpan) selectedSpan.classList.add('animate-bounce-slow');
+      selectedMood = mood; selectedEmoji = emoji;
+    }
+
+    function initFeedListener() {
+      cleanupListeners();
+      const container = document.getElementById('posts-container');
+      const unsub = DB.listenPosts((posts) => {
+        if (posts.length === 0) { container.innerHTML = `<div class="cartoon-box p-8 bg-white text-center border border-slate-200"><p class="font-medium text-sm text-slate-400">No feelings shared yet. Be the first to express yourself! 🎈</p></div>`; return; }
+        container.innerHTML = '';
+        const moodBadgeClasses = { excited: 'bg-rose-50 text-rose-700 border-rose-100', happy: 'bg-amber-50 text-amber-700 border-amber-100', tired: 'bg-sky-50 text-sky-700 border-sky-100', anxious: 'bg-purple-50 text-purple-700 border-purple-100', moody: 'bg-orange-50 text-orange-700 border-orange-100' };
+        posts.forEach((post) => {
+          const postCard = document.createElement('article'); postCard.className = `cartoon-box p-4 bg-white border border-slate-200 animate-pop`;
+          const moodClass = moodBadgeClasses[post.mood] || 'bg-slate-50 text-slate-700 border-slate-100';
+          postCard.innerHTML = `
+            <div class="flex gap-3">
+              ${renderAvatarHTML(post.avatar, 'avatar-circle')}
+              <div class="flex-1 flex flex-col gap-1 overflow-hidden">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-1.5 overflow-hidden">
+                    <span class="font-bold text-slate-800 text-sm truncate leading-tight">${post.nickname}</span>
+                    <span class="text-[11px] text-slate-400 truncate leading-tight">@${post.nickname.toLowerCase().replace(/\s+/g, '')}</span>
+                    <span class="text-[10px] text-slate-300 leading-none select-none">•</span>
+                    <span class="text-[10px] text-slate-400 shrink-0 leading-tight">${formatTime(post.timestamp)}</span>
+                  </div>
+                  <div class="px-2 py-0.5 rounded-full text-[10px] font-semibold border flex items-center gap-1 shrink-0 ${moodClass}">
+                    <span>${post.emoji}</span><span class="capitalize">${post.mood}</span>
+                  </div>
+                </div>
+                <p class="text-xs md:text-sm text-slate-700 leading-relaxed whitespace-pre-line mt-1 pr-1">${post.content}</p>
+                <div class="post-file-container mt-1"></div>
+                <div class="flex items-center gap-6 mt-3 pt-2 border-t border-slate-50">
+                  <button class="react-btn social-react-btn react-hugs" data-post-id="${post.id}" data-type="hugs"><span class="text-sm">❤️</span><span class="react-badge">${post.reactions?.hugs || 0}</span></button>
+                  <button class="react-btn social-react-btn react-same" data-post-id="${post.id}" data-type="same"><span class="text-sm">🔁</span><span class="react-badge">${post.reactions?.same || 0}</span></button>
+                  <button class="react-btn social-react-btn react-support" data-post-id="${post.id}" data-type="support"><span class="text-sm">⚡</span><span class="react-badge">${post.reactions?.support || 0}</span></button>
+                </div>
+              </div>
+            </div>`;
+          if (post.file) postCard.querySelector('.post-file-container').appendChild(renderFileAttachment(post.file, false));
+          container.appendChild(postCard);
+        });
+        container.querySelectorAll('.react-btn').forEach(btn => {
+          btn.addEventListener('click', async (e) => { const b = e.currentTarget; b.disabled = true; try { await DB.addReaction(b.getAttribute('data-post-id'), b.getAttribute('data-type')); showToast('💖', 'Reaction sent!'); } catch (error) { console.error(error); } finally { b.disabled = false; } });
+        });
+      });
+      activeUnsubscribes.push(unsub);
+    }
+
+    function initCommunitiesListener() {
+      cleanupListeners();
+      const grid = document.getElementById('communities-grid');
+      const unsub = DB.listenCommunities(async (comms) => {
+        if (comms.length === 0) {
+          try {
+            await DB.addCommunity({ name: "Math & Science Squad", icon: "📐", description: "Homework help, study guides, and exam preparation.", accessCode: "" });
+            await DB.addCommunity({ name: "Late Night Coders", icon: "☕", description: "Pair programming, bug hunting, and project sharing.", accessCode: "" });
+            return;
+          } catch (err) { console.error(err); }
+        }
+        grid.innerHTML = '';
+        comms.forEach((comm) => {
+          const card = document.createElement('div'); card.className = 'cartoon-box p-5 bg-white border border-slate-200 flex flex-col justify-between gap-4 animate-pop';
+
+          // Fix: Ensure we properly evaluate if there's a code
+          const commCodeStr = (comm.accessCode || '').trim();
+          const isExclusive = commCodeStr.length > 0;
+          const lockBadge = isExclusive ? `<span class="text-[10px] px-2 py-0.5 rounded-full font-semibold border bg-rose-50 text-rose-600 border-rose-100 flex items-center gap-1 shrink-0"><span class="text-[9px]">🔒</span> Exclusive</span>` : '';
+
+          card.innerHTML = `
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <div class="flex items-center gap-3 overflow-hidden">
+                  <span class="text-2xl p-1.5 bg-slate-50 border border-slate-200 rounded-lg shrink-0">${comm.icon}</span>
+                  <h3 class="text-lg font-bold text-slate-800 truncate">${comm.name}</h3>
+                </div>
+                ${lockBadge}
+              </div>
+              <p class="text-xs text-slate-500 leading-relaxed">${comm.description}</p>
+            </div>
+            <button class="join-comm-btn cartoon-btn btn-blue w-full py-2 text-xs font-semibold gap-1.5 rounded-lg border border-indigo-600 shadow-sm" data-id="${comm.id}" data-name="${comm.name}" data-icon="${comm.icon}" data-desc="${comm.description}" data-code="${commCodeStr}">
+              <span>Enter Group</span><span>🚪</span>
+            </button>`;
+          grid.appendChild(card);
+        });
+
+        grid.querySelectorAll('.join-comm-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const b = e.currentTarget; const code = b.getAttribute('data-code');
+            if (code && code.trim().length > 0) {
+              const userInput = prompt(`🔒 "${b.getAttribute('data-name')}" is protected. Enter Access Code:`);
+              if (userInput === null) return;
+              if (userInput.trim() !== code.trim()) { showToast('❌', 'Incorrect access code!'); return; }
+            }
+            openCommunity(b.getAttribute('data-id'), b.getAttribute('data-name'), b.getAttribute('data-icon'), b.getAttribute('data-desc'));
+          });
+        });
+      });
+      activeUnsubscribes.push(unsub);
+    }
+
+    function openCommunity(id, name, icon, desc) {
+      activeCommunityId = id;
+      document.getElementById('active-comm-icon').textContent = icon || '📐';
+      document.getElementById('active-comm-name').textContent = name || '';
+      document.getElementById('active-comm-desc').textContent = desc || '';
+      document.getElementById('screen-communities').classList.add('hidden');
+      document.getElementById('screen-active-community').classList.remove('hidden');
+
+      cleanupListeners();
+
+      const chatContainer = document.getElementById('chat-messages-container');
+      chatContainer.innerHTML = `<div class="text-center py-6 text-slate-400 text-xs font-semibold">Connecting to chat...</div>`;
+      const unsubChat = DB.listenChatMessages(id, (messages) => {
+        chatContainer.innerHTML = '';
+        if (messages.length === 0) { chatContainer.innerHTML = `<div class="text-center py-8 text-slate-400 text-[10px] font-semibold uppercase tracking-wider">👋 Start conversation</div>`; return; }
+        messages.forEach(msg => {
+          const isMe = currentUser && msg.nickname === currentUser.nickname;
+          const wrap = document.createElement('div'); wrap.className = `flex gap-2.5 max-w-full ${isMe ? 'flex-row-reverse self-end' : 'self-start'}`;
+          wrap.innerHTML = (isMe ? '' : renderAvatarHTML(msg.avatar, 'avatar-circle-sm self-end shadow-sm bg-white')) +
+            `<div class="flex flex-col ${isMe ? 'items-end' : 'items-start'}">
+              <span class="text-[10px] font-bold text-slate-400 mb-0.5 px-1">${msg.nickname}</span>
+              <div class="speech-bubble ${isMe ? 'speech-bubble-right' : 'speech-bubble-left'}">
+                <p class="text-xs break-words">${msg.content}</p>
+                <div class="chat-file-container mt-1"></div>
+              </div>
+              <span class="text-[9px] text-slate-400 mt-0.5 px-1">${formatTime(msg.timestamp)}</span>
+            </div>` + (isMe ? renderAvatarHTML(msg.avatar, 'avatar-circle-sm self-end shadow-sm bg-white') : '');
+          if (msg.file) wrap.querySelector('.chat-file-container').appendChild(renderFileAttachment(msg.file, isMe));
+          chatContainer.appendChild(wrap);
+        });
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      });
+
+      const taskContainer = document.getElementById('missions-container');
+      const unsubTasks = DB.listenTasks(id, (tasks) => {
+        taskContainer.innerHTML = '';
+        if (tasks.length === 0) { taskContainer.innerHTML = `<div class="text-center py-8 text-slate-400 text-xs">🎯 No active missions. Add a task!</div>`; return; }
+        tasks.forEach(task => {
+          const item = document.createElement('div');
+          item.className = `cartoon-box p-2.5 border border-slate-200 flex items-center justify-between gap-3 animate-pop rounded-lg ${task.completed ? 'bg-slate-50/80 opacity-70' : 'bg-white'}`;
+          let badgeClass = task.type.includes('📚') ? 'bg-sky-50 text-sky-600 border-sky-100' : task.type.includes('📝') ? 'bg-rose-50 text-rose-600 border-rose-100' : 'bg-purple-50 text-purple-600 border-purple-100';
+          item.innerHTML = `
+            <div class="flex items-center gap-3 overflow-hidden">
+              <div class="task-check cartoon-checkbox shrink-0 ${task.completed ? 'checked' : ''}" data-task-id="${task.id}" data-checked="${task.completed}"></div>
+              <div class="overflow-hidden">
+                <span class="text-[10px] px-2 py-0.5 rounded-full font-semibold border ${badgeClass} inline-block leading-none mb-1">${task.type}</span>
+                <h4 class="font-bold text-xs text-slate-700 truncate ${task.completed ? 'line-through text-slate-400' : ''}">${task.title}</h4>
+                ${task.completed ? `<span class="text-[10px] font-semibold text-emerald-600 block mt-0.5">Completed by ${task.completedBy || 'Student'} ✓</span>` : `<span class="text-[10px] text-slate-400 block mt-0.5">Due: ${task.dueDate}</span>`}
+              </div>
+            </div>`;
+          taskContainer.appendChild(item);
+        });
+        taskContainer.querySelectorAll('.task-check').forEach(box => {
+          box.addEventListener('click', async (e) => {
+            const t = e.currentTarget; t.style.pointerEvents = 'none';
+            try { await DB.toggleTask(id, t.getAttribute('data-task-id'), t.getAttribute('data-checked') !== 'true', currentUser ? currentUser.nickname : 'Guest'); }
+            catch (error) { console.error(error); }
+          });
+        });
+      });
+      activeUnsubscribes.push(unsubChat, unsubTasks);
+    }
+
+    function initDmsListener() {
+      cleanupListeners();
+      if (!currentUser) { checkUserProfile(); return; }
+      const unsubUsers = DB.listenUsers((users) => { allUsers = users; renderFriendsDirectory(); renderConversations(); });
+      const unsubFriendships = DB.listenFriendships(currentUser.uid, (friendships) => { allFriendships = friendships; renderFriendsDirectory(); renderConversations(); updateUnreadBadges(); });
+      activeUnsubscribes.push(unsubUsers, unsubFriendships);
+    }
+
+    function renderFriendsDirectory() {
+      const container = document.getElementById('friends-directory-list'); const searchInput = document.getElementById('find-friends-input');
+      if (!container) return; const searchQuery = searchInput ? searchInput.value.toLowerCase().trim() : '';
+      const filteredUsers = allUsers.filter(u => { if (!currentUser || u.uid === currentUser.uid) return false; if (searchQuery && !u.nickname.toLowerCase().includes(searchQuery)) return false; return true; });
+      if (filteredUsers.length === 0) { container.innerHTML = `<div class="text-center py-6 text-slate-400 text-[10px] font-semibold uppercase tracking-wider">No students found</div>`; return; }
+      container.innerHTML = '';
+      filteredUsers.forEach(u => {
+        const userRow = document.createElement('div'); userRow.className = 'flex items-center justify-between p-2 bg-slate-50 border border-slate-100 rounded-lg gap-2 text-xs';
+        const info = document.createElement('div'); info.className = 'flex items-center gap-1.5 overflow-hidden';
+        const avatar = document.createElement('span'); avatar.className = 'avatar-circle-sm shrink-0'; setAvatarElement(avatar, u.avatar);
+        const name = document.createElement('span'); name.className = 'font-bold text-slate-700 truncate'; name.textContent = u.nickname;
+        info.appendChild(avatar); info.appendChild(name); userRow.appendChild(info);
+        const friendship = allFriendships.find(f => f.users.includes(u.uid));
+        const actionBtn = document.createElement('button');
+        if (friendship) {
+          if (friendship.status === 'accepted') {
+            actionBtn.className = 'cartoon-btn btn-purple px-2 py-1 text-[9px] font-bold'; actionBtn.textContent = 'Chat 💬';
+            actionBtn.addEventListener('click', () => { openPrivateChat(friendship.id, u); });
+          } else if (friendship.status === 'pending') {
+            if (friendship.senderId === currentUser.uid) {
+              actionBtn.className = 'cartoon-btn btn-white px-2 py-1 text-[9px] font-bold border-slate-200 text-slate-400 cursor-not-allowed'; actionBtn.textContent = 'Sent 🕒'; actionBtn.disabled = true;
+            } else {
+              actionBtn.className = 'cartoon-btn btn-yellow px-2 py-1 text-[9px] font-bold'; actionBtn.textContent = 'Accept ✅';
+              actionBtn.addEventListener('click', async () => { actionBtn.disabled = true; try { await DB.acceptFriendRequest(currentUser.uid, u.uid); showToast('🤝', `Friends with ${u.nickname}!`); } catch (err) { } });
+            }
+          }
+        } else {
+          actionBtn.className = 'cartoon-btn btn-white px-2 py-1 text-[9px] font-bold'; actionBtn.textContent = 'Add Friend ➕';
+          actionBtn.addEventListener('click', async () => { actionBtn.disabled = true; try { await DB.sendFriendRequest(currentUser.uid, u.uid); showToast('✉️', `Request sent!`); } catch (err) { } });
+        }
+        userRow.appendChild(actionBtn); container.appendChild(userRow);
+      });
+    }
+
+    function renderConversations() {
+      const container = document.getElementById('dm-conversations-list'); if (!container) return;
+      const acceptedFriendships = allFriendships.filter(f => f.status === 'accepted');
+      if (acceptedFriendships.length === 0) { container.innerHTML = `<div class="text-center py-8 text-xs text-slate-400 font-semibold leading-normal max-w-[180px] mx-auto">No active chats. Add friends in the directory to start!</div>`; return; }
+      container.innerHTML = '';
+      acceptedFriendships.forEach(f => {
+        const otherUid = f.users.find(id => id !== currentUser.uid); const friend = allUsers.find(u => u.uid === otherUid); if (!friend) return;
+        const chatRow = document.createElement('div'); const isActive = activeDmFriendshipId === f.id;
+        chatRow.className = `flex items-center gap-2 p-2 rounded-lg cursor-pointer transition-colors border ${isActive ? 'bg-purple-50 border-purple-100' : 'bg-slate-50/50 hover:bg-slate-50 border-transparent'}`;
+        const avatar = document.createElement('span'); avatar.className = 'avatar-circle-sm shrink-0'; setAvatarElement(avatar, friend.avatar);
+        const details = document.createElement('div'); details.className = 'flex-1 overflow-hidden leading-tight';
+        const name = document.createElement('span'); name.className = 'font-bold text-slate-700 text-xs block truncate'; name.textContent = friend.nickname;
+        const handle = document.createElement('span'); handle.className = 'text-[9px] text-slate-400 block truncate'; handle.textContent = `@${friend.nickname.toLowerCase().replace(/\s+/g, '')}`;
+        details.appendChild(name); details.appendChild(handle); chatRow.appendChild(avatar); chatRow.appendChild(details);
+        chatRow.addEventListener('click', () => { openPrivateChat(f.id, friend); renderConversations(); }); container.appendChild(chatRow);
+      });
+    }
+
+    function openPrivateChat(chatId, friend) {
+      activeDmFriendshipId = chatId; activeDmFriend = friend;
+      document.getElementById('dm-chat-placeholder').classList.add('hidden'); document.getElementById('dm-chat-active-window').classList.remove('hidden');
+      setAvatarElement(document.getElementById('dm-active-avatar'), friend.avatar); document.getElementById('dm-active-nickname').textContent = friend.nickname;
+      const messagesContainer = document.getElementById('dm-messages-container'); messagesContainer.innerHTML = `<div class="text-center py-6 text-slate-400 text-xs font-semibold">Connecting...</div>`;
+      if (window.unsubActivePrivateChat) window.unsubActivePrivateChat();
+      window.unsubActivePrivateChat = DB.listenPrivateMessages(chatId, (messages) => {
+        messagesContainer.innerHTML = '';
+        if (messages.length === 0) { messagesContainer.innerHTML = `<div class="text-center py-8 text-slate-400 text-[10px] font-semibold uppercase tracking-wider">👋 Start of private chat.</div>`; return; }
+        messages.forEach(msg => {
+          const isMe = msg.senderId === currentUser.uid; const bubbleWrap = document.createElement('div'); bubbleWrap.className = `flex gap-2.5 max-w-full ${isMe ? 'flex-row-reverse self-end' : 'self-start'}`;
+          const avatarBox = renderAvatarHTML(msg.senderAvatar, 'avatar-circle-sm self-end shadow-sm bg-white');
+          const speechBubble = `<div class="flex flex-col ${isMe ? 'items-end' : 'items-start'}"><span class="text-[10px] font-bold text-slate-400 mb-0.5 px-1">${msg.senderName}</span><div class="speech-bubble ${isMe ? 'speech-bubble-purple' : 'speech-bubble-left bg-slate-100 border-slate-200 text-slate-800'}"><p class="text-xs break-words">${msg.content}</p><div class="chat-file-container mt-1"></div></div><span class="text-[9px] text-slate-400 mt-0.5 px-1">${formatTime(msg.timestamp)}</span></div>`;
+          bubbleWrap.innerHTML = isMe ? `${speechBubble}${avatarBox}` : `${avatarBox}${speechBubble}`;
+          if (msg.file) bubbleWrap.querySelector('.chat-file-container').appendChild(renderFileAttachment(msg.file, isMe));
+          messagesContainer.appendChild(bubbleWrap);
+        });
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      });
+    }
+
+    function updateUnreadBadges() {
+      const reqBadge = document.getElementById('friend-requests-badge'); if (!reqBadge) return;
+      const pendingRequests = allFriendships.filter(f => f.status === 'pending' && f.senderId !== currentUser.uid);
+      if (pendingRequests.length > 0) { reqBadge.textContent = pendingRequests.length; reqBadge.classList.remove('hidden'); } else { reqBadge.classList.add('hidden'); }
+    }
+
+    function leaveCommunity() {
+      activeCommunityId = null; document.getElementById('screen-active-community').classList.add('hidden');
+      document.getElementById('screen-communities').classList.remove('hidden'); initCommunitiesListener();
+    }
+
+
+    // ==========================================
+    // DOM READY EVENTS
+    // ==========================================
+    document.addEventListener('DOMContentLoaded', () => {
+      window.addEventListener('error', (e) => { showToast('❌ Error', e.message || 'Error occurred.'); console.error(e); });
+      checkUserProfile(); initFeedListener();
+
+      const btnFeed = document.getElementById('nav-feed'), btnCommunities = document.getElementById('nav-communities'), btnDms = document.getElementById('nav-dms');
+      const screenFeed = document.getElementById('screen-feed'), screenComms = document.getElementById('screen-communities'), screenDms = document.getElementById('screen-dms'), screenActiveComm = document.getElementById('screen-active-community');
+
+      const selectTab = (tab) => {
+        btnFeed.classList.toggle('active', tab === 'feed'); btnCommunities.classList.toggle('active', tab === 'communities'); if (btnDms) btnDms.classList.toggle('active', tab === 'dms');
+        const mobFeed = document.getElementById('mobile-nav-feed'), mobComms = document.getElementById('mobile-nav-communities'), mobDms = document.getElementById('mobile-nav-dms');
+        if (mobFeed) mobFeed.className = `flex flex-col items-center gap-0.5 ${tab === 'feed' ? 'text-indigo-600' : 'text-slate-400'}`;
+        if (mobComms) mobComms.className = `flex flex-col items-center gap-0.5 ${tab === 'communities' ? 'text-indigo-600' : 'text-slate-400'}`;
+        if (mobDms) mobDms.className = `flex flex-col items-center gap-0.5 ${tab === 'dms' ? 'text-indigo-600' : 'text-slate-400'}`;
+        screenFeed.classList.toggle('hidden', tab !== 'feed'); screenComms.classList.toggle('hidden', tab !== 'communities'); if (screenDms) screenDms.classList.toggle('hidden', tab !== 'dms');
+        screenActiveComm.classList.add('hidden');
+        if (tab === 'feed') initFeedListener(); else if (tab === 'communities') initCommunitiesListener(); else if (tab === 'dms') initDmsListener();
+      };
+
+      btnFeed.addEventListener('click', () => selectTab('feed')); btnCommunities.addEventListener('click', () => selectTab('communities')); if (btnDms) btnDms.addEventListener('click', () => selectTab('dms'));
+      document.getElementById('mobile-nav-feed')?.addEventListener('click', () => selectTab('feed'));
+      document.getElementById('mobile-nav-communities')?.addEventListener('click', () => selectTab('communities'));
+      document.getElementById('mobile-nav-dms')?.addEventListener('click', () => selectTab('dms'));
+      document.getElementById('mobile-profile-btn')?.addEventListener('click', () => document.getElementById('change-profile-btn').click());
+
+      let selectedAvatar = '🦊';
+      document.getElementById('change-profile-btn').addEventListener('click', () => {
+        if (currentUser) { document.getElementById('input-nickname').value = currentUser.nickname; selectedAvatar = currentUser.avatar; }
+        const customPreview = document.getElementById('custom-avatar-preview');
+        if (selectedAvatar.startsWith('http')) { if (customPreview) customPreview.innerHTML = `<img src="${selectedAvatar}" class="w-full h-full object-cover rounded-full" />`; }
+        else { if (customPreview) customPreview.innerHTML = `<span>None</span>`; }
+        document.querySelectorAll('.avatar-option').forEach(btn => btn.className = btn.getAttribute('data-avatar') === selectedAvatar ? 'avatar-option cartoon-btn btn-yellow py-2 text-2xl rounded-lg border-yellow-300' : 'avatar-option cartoon-btn btn-white py-2 text-2xl rounded-lg');
+        document.getElementById('auth-modal').classList.remove('hidden');
+      });
+
+      document.querySelectorAll('.avatar-option').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const customPreview = document.getElementById('custom-avatar-preview'); if (customPreview) customPreview.innerHTML = `<span>None</span>`;
+          document.querySelectorAll('.avatar-option').forEach(b => b.className = 'avatar-option cartoon-btn btn-white py-2 text-2xl rounded-lg');
+          e.currentTarget.className = 'avatar-option cartoon-btn btn-yellow py-2 text-2xl rounded-lg border-yellow-300';
+          selectedAvatar = e.currentTarget.getAttribute('data-avatar');
+        });
+      });
+
+      const avatarFileInput = document.getElementById('input-avatar-file');
+      if (avatarFileInput) {
+        avatarFileInput.addEventListener('change', async (e) => {
+          const file = e.target.files[0]; if (!file) return; avatarFileInput.disabled = true; document.getElementById('avatar-upload-status')?.classList.remove('hidden');
+          try {
+            const fileDetails = await uploadFileToTelegram(file); selectedAvatar = fileDetails.url;
+            document.querySelectorAll('.avatar-option').forEach(b => b.className = 'avatar-option cartoon-btn btn-white py-2 text-2xl rounded-lg');
+            const customPreview = document.getElementById('custom-avatar-preview'); if (customPreview) customPreview.innerHTML = `<img src="${selectedAvatar}" class="w-full h-full object-cover rounded-full" />`;
+            showToast('🖼️', 'Profile picture uploaded successfully!');
+          } catch (err) { showToast('❌', err.message); } finally { avatarFileInput.disabled = false; avatarFileInput.value = ''; document.getElementById('avatar-upload-status')?.classList.add('hidden'); }
+        });
+      }
+
+      document.getElementById('save-profile-btn').addEventListener('click', () => saveUserProfile(document.getElementById('input-nickname').value, selectedAvatar));
+      document.getElementById('google-login-btn').addEventListener('click', async () => { try { await signInWithPopup(DB.auth, new GoogleAuthProvider()); showToast('👋', 'Logged in!'); } catch (err) { showToast('❌', 'Login failed.'); } });
+      document.getElementById('logout-btn').addEventListener('click', async () => { await signOut(DB.auth); localStorage.removeItem('moodbubble_user'); currentUser = null; window.location.reload(); });
+      document.querySelectorAll('.mood-option').forEach(btn => btn.addEventListener('click', () => selectMoodOption(btn, btn.getAttribute('data-mood'), btn.getAttribute('data-emoji'))));
+      const defaultMoodBtn = document.querySelector('[data-mood="happy"]'); if (defaultMoodBtn) selectMoodOption(defaultMoodBtn, 'happy', '😊');
+
+      const postTextarea = document.getElementById('post-textarea');
+      postTextarea.addEventListener('input', () => document.getElementById('char-counter').textContent = `${postTextarea.value.length} / 280 characters`);
+
+      let feedAttachedFile = null; const feedFileInput = document.getElementById('feed-file-input');
+      if (feedFileInput) {
+        feedFileInput.addEventListener('change', async (e) => {
+          const file = e.target.files[0]; if (!file) return; if (!currentUser) { checkUserProfile(); feedFileInput.value = ''; return; }
+          feedFileInput.disabled = true; document.getElementById('feed-upload-progress')?.classList.remove('hidden');
+          try {
+            feedAttachedFile = await uploadFileToTelegram(file);
+            document.getElementById('feed-preview-name').textContent = feedAttachedFile.name; document.getElementById('feed-preview-icon').textContent = feedAttachedFile.type.startsWith('image/') ? '🖼️' : '📄';
+            document.getElementById('feed-attachment-preview')?.classList.remove('hidden');
+          } catch (err) { showToast('❌', err.message); feedAttachedFile = null; } finally { feedFileInput.disabled = false; feedFileInput.value = ''; document.getElementById('feed-upload-progress')?.classList.add('hidden'); }
+        });
+      }
+      document.getElementById('remove-feed-attachment-btn')?.addEventListener('click', () => { feedAttachedFile = null; document.getElementById('feed-attachment-preview')?.classList.add('hidden'); });
+
+      document.getElementById('submit-post-btn').addEventListener('click', async (e) => {
+        if (!postTextarea.value.trim() && !feedAttachedFile) return showToast('⚠️', 'Write something or attach a file!'); if (!currentUser) return checkUserProfile();
+        e.currentTarget.disabled = true;
+        try {
+          await DB.addPost({ nickname: currentUser.nickname, avatar: currentUser.avatar, mood: selectedMood, emoji: selectedEmoji, content: postTextarea.value.trim(), file: feedAttachedFile });
+          postTextarea.value = ''; document.getElementById('char-counter').textContent = '0 / 280 characters'; feedAttachedFile = null; document.getElementById('feed-attachment-preview')?.classList.add('hidden');
+        } catch (err) { showToast('❌', 'Error writing to timeline.'); } finally { e.currentTarget.disabled = false; }
+      });
+
+      const createCommModal = document.getElementById('create-community-modal');
+      document.getElementById('open-create-community-btn').addEventListener('click', () => createCommModal.classList.remove('hidden'));
+      document.getElementById('close-create-comm-btn').addEventListener('click', () => createCommModal.classList.add('hidden'));
+
+      document.getElementById('create-community-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        try {
+          await DB.addCommunity({ name: document.getElementById('comm-name').value, icon: document.getElementById('comm-icon').value, description: document.getElementById('comm-desc').value, accessCode: document.getElementById('comm-code').value });
+          createCommModal.classList.add('hidden'); e.target.reset(); showToast('🎉', 'Community created!');
+        } catch (err) { showToast('❌', 'Failed to create.'); }
+      });
+
+      document.getElementById('leave-community-btn').addEventListener('click', leaveCommunity);
+
+      const chatInput = document.getElementById('chat-input'), sendChatBtn = document.getElementById('send-chat-btn');
+      const submitChat = async () => {
+        const text = chatInput.value.trim(); if (!text || !activeCommunityId) return; if (!currentUser) return checkUserProfile();
+        try { await DB.addChatMessage(activeCommunityId, { nickname: currentUser.nickname, avatar: currentUser.avatar, content: text }); chatInput.value = ''; } catch (e) { }
+      };
+      sendChatBtn.addEventListener('click', submitChat); chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitChat(); });
+
+      const commFileInput = document.getElementById('comm-file-input');
+      if (commFileInput) {
+        commFileInput.addEventListener('change', async (e) => {
+          const file = e.target.files[0]; if (!file || !activeCommunityId) return; if (!currentUser) { checkUserProfile(); return; }
+          commFileInput.disabled = true; document.getElementById('comm-upload-progress')?.classList.remove('hidden');
+          try {
+            const fileDetails = await uploadFileToTelegram(file);
+            await DB.addChatMessage(activeCommunityId, { nickname: currentUser.nickname, avatar: currentUser.avatar, content: '', file: fileDetails });
+            showToast('📎', 'File shared!');
+          } catch (err) { showToast('❌', err.message); } finally { commFileInput.disabled = false; commFileInput.value = ''; document.getElementById('comm-upload-progress')?.classList.add('hidden'); }
+        });
+      }
+
+      document.getElementById('add-mission-form').addEventListener('submit', async (e) => {
+        e.preventDefault(); if (!activeCommunityId) return;
+        try { await DB.addTask(activeCommunityId, { title: document.getElementById('mission-title').value, type: document.getElementById('mission-type').value, dueDate: document.getElementById('mission-date').value }); e.target.reset(); showToast('🎯', 'Mission added!'); } catch (err) { }
+      });
+
+      document.getElementById('find-friends-input')?.addEventListener('input', renderFriendsDirectory);
+
+      const dmChatInput = document.getElementById('dm-chat-input'), sendDmBtn = document.getElementById('send-dm-btn');
+      const submitPrivateMessage = async () => {
+        if (!activeDmFriendshipId) return; const text = dmChatInput.value.trim(); if (!text) return; if (!currentUser) return checkUserProfile();
+        try { await DB.sendPrivateMessage(activeDmFriendshipId, { senderId: currentUser.uid, senderName: currentUser.nickname, senderAvatar: currentUser.avatar, content: text }); dmChatInput.value = ''; } catch (err) { }
+      };
+      sendDmBtn?.addEventListener('click', submitPrivateMessage); dmChatInput?.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitPrivateMessage(); });
+
+      const dmFileInput = document.getElementById('dm-file-input');
+      if (dmFileInput) {
+        dmFileInput.addEventListener('change', async (e) => {
+          const file = e.target.files[0]; if (!file || !activeDmFriendshipId) return; if (!currentUser) return checkUserProfile();
+          dmFileInput.disabled = true; document.getElementById('dm-upload-progress')?.classList.remove('hidden');
+          try {
+            const fileDetails = await uploadFileToTelegram(file);
+            await DB.sendPrivateMessage(activeDmFriendshipId, { senderId: currentUser.uid, senderName: currentUser.nickname, senderAvatar: currentUser.avatar, content: '', file: fileDetails });
+          } catch (err) { showToast('❌', err.message); } finally { dmFileInput.disabled = false; dmFileInput.value = ''; document.getElementById('dm-upload-progress')?.classList.add('hidden'); }
+        });
+      }
+    });
+  </script>
 </body>
+
 </html>
