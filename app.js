@@ -652,7 +652,34 @@ function initCommunitiesListener() {
 
   const grid = document.getElementById('communities-grid');
 
-  const unsub = DB.listenCommunities((comms) => {
+  const unsub = DB.listenCommunities(async (comms) => {
+    // Seed default communities if Firestore list is empty
+    if (comms.length === 0) {
+      try {
+        await DB.addCommunity({
+          name: "Math & Science Squad",
+          icon: "📐",
+          description: "Homework help, study guides, and exam preparation.",
+          accessCode: ""
+        });
+        await DB.addCommunity({
+          name: "Late Night Coders",
+          icon: "☕",
+          description: "Pair programming, bug hunting, and project sharing.",
+          accessCode: ""
+        });
+        await DB.addCommunity({
+          name: "Book Club & Literature",
+          icon: "📚",
+          description: "Reading schedules, critique, and essay discussion.",
+          accessCode: ""
+        });
+        return;
+      } catch (err) {
+        console.error("Error seeding communities:", err);
+      }
+    }
+
     grid.innerHTML = '';
     
     // Add default template cards
