@@ -265,13 +265,7 @@ function checkUserProfile() {
     setAvatarElement(widgetAvatar, currentUser.avatar);
     widgetNickname.textContent = currentUser.nickname;
     
-    // Prepopulate Telegram fields if they exist
-    const savedToken = localStorage.getItem('moodbubble_tg_token') || "8814332884:AAEbI2UlM0WouNuEamtwyHYTTeY-UnvWWcY";
-    const savedChatId = localStorage.getItem('moodbubble_tg_chat_id') || "-5277905163";
-    const inputToken = document.getElementById('input-tg-token');
-    const inputChatId = document.getElementById('input-tg-chatid');
-    if (inputToken) inputToken.value = savedToken;
-    if (inputChatId) inputChatId.value = savedChatId;
+
 
     // Update handle
     const widgetHandle = document.getElementById('widget-handle');
@@ -317,19 +311,7 @@ async function saveUserProfile(nickname, avatar) {
     uid = DB.auth.currentUser.uid;
   }
 
-  // Save Telegram details if provided
-  const inputToken = document.getElementById('input-tg-token');
-  const inputChatId = document.getElementById('input-tg-chatid');
-  if (inputToken && inputToken.value.trim()) {
-    localStorage.setItem('moodbubble_tg_token', inputToken.value.trim());
-  } else {
-    localStorage.removeItem('moodbubble_tg_token');
-  }
-  if (inputChatId && inputChatId.value.trim()) {
-    localStorage.setItem('moodbubble_tg_chat_id', inputChatId.value.trim());
-  } else {
-    localStorage.removeItem('moodbubble_tg_chat_id');
-  }
+
 
   currentUser = { uid, nickname: trimmed, avatar };
   localStorage.setItem('moodbubble_user', JSON.stringify(currentUser));
