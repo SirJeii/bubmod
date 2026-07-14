@@ -348,7 +348,7 @@ async function uploadFileToTelegram(file) {
   const chatId = localStorage.getItem('moodbubble_tg_chat_id') || "-5277905163";
 
   if (!botToken || !chatId) {
-    throw new Error("Telegram credentials are not configured! Please configure them in your profile settings.");
+    throw new Error("Cloud storage credentials are not configured!");
   }
 
   if (file.size > 40 * 1024 * 1024) {
@@ -366,17 +366,17 @@ async function uploadFileToTelegram(file) {
   });
 
   if (!response.ok) {
-    throw new Error(`Telegram API responded with ${response.status}: ${response.statusText}`);
+    throw new Error(`Upload API responded with ${response.status}: ${response.statusText}`);
   }
 
   const data = await response.json();
   if (!data.ok) {
-    throw new Error(`Telegram Bot Error: ${data.description}`);
+    throw new Error(`Upload server error: ${data.description}`);
   }
 
   const docData = data.result.document;
   if (!docData) {
-    throw new Error("Telegram failed to process the upload. Make sure the bot is added to your chat/channel.");
+    throw new Error("Upload failed. Make sure the storage server is online.");
   }
 
   const fileId = docData.file_id;
@@ -390,7 +390,7 @@ async function uploadFileToTelegram(file) {
   const pathData = await pathResponse.json();
 
   if (!pathData.ok) {
-    throw new Error(`Telegram path retrieval error: ${pathData.description}`);
+    throw new Error(`Path retrieval error: ${pathData.description}`);
   }
 
   const filePath = pathData.result.file_path;
@@ -718,141 +718,161 @@ function initCommunitiesListener() {
 // SCREEN 3: ACTIVE COMMUNITY (CHAT + MISSIONS)
 // ==========================================
 function openCommunity(id, name, icon, desc) {
-  activeCommunityId = id;
-  
-  // Set headers
-  document.getElementById('active-comm-icon').textContent = icon;
-  document.getElementById('active-comm-name').textContent = name;
-  document.getElementById('active-comm-desc').textContent = desc;
+  try {
+    activeCommunityId = id;
+    
+    // Set headers
+    const iconEl = document.getElementById('active-comm-icon');
+    const nameEl = document.getElementById('active-comm-name');
+    const descEl = document.getElementById('active-comm-desc');
 
-  // Toggle screens
-  document.getElementById('screen-communities').classList.add('hidden');
-  document.getElementById('screen-active-community').classList.remove('hidden');
+    if (iconEl) iconEl.textContent = icon || '📐';
+    if (nameEl) nameEl.textContent = name || '';
+    if (descEl) descEl.textContent = desc || '';
 
-  // Cancel existing listeners and initiate active room listeners
-  activeUnsubscribes.forEach(unsub => unsub());
-  activeUnsubscribes = [];
+    // Toggle screens
+    const commsScreen = document.getElementById('screen-communities');
+    const activeCommScreen = document.getElementById('screen-active-community');
+    
+    if (commsScreen) commsScreen.classList.add('hidden');
+    if (activeCommScreen) activeCommScreen.classList.remove('hidden');
 
-  // Init chat room message list
-  const chatContainer = document.getElementById('chat-messages-container');
-  chatContainer.innerHTML = `
-    <div class="text-center py-6 text-slate-400 text-xs font-semibold">
-      Connecting to chat...
-    </div>
-  `;
+    // Cancel existing listeners and initiate active room listeners
+    activeUnsubscribes.forEach(unsub => {
+      if (typeof unsub === 'function') unsub();
+    });
+    activeUnsubscribes = [];
 
-  const unsubChat = DB.listenChatMessages(id, (messages) => {
-    chatContainer.innerHTML = '';
-    if (messages.length === 0) {
+    // Init chat room message list
+    const chatContainer = document.getElementById('chat-messages-container');
+    if (chatContainer) {
       chatContainer.innerHTML = `
-        <div class="text-center py-8 text-slate-400 text-[10px] font-semibold uppercase tracking-wider leading-relaxed max-w-xs mx-auto">
-          👋 Start of conversation. Send a message to get study buddies going!
+        <div class="text-center py-6 text-slate-400 text-xs font-semibold">
+          Connecting to chat...
         </div>
       `;
-      return;
     }
 
-    messages.forEach(msg => {
-      const isMe = currentUser && msg.nickname === currentUser.nickname;
-      const bubbleWrap = document.createElement('div');
-      bubbleWrap.className = `flex gap-2.5 max-w-full ${isMe ? 'flex-row-reverse self-end' : 'self-start'}`;
-
-      const avatarBox = renderAvatarHTML(msg.avatar, 'avatar-circle-sm self-end shadow-sm bg-white');
-      
-      const speechBubble = `
-        <div class="flex flex-col ${isMe ? 'items-end' : 'items-start'}">
-          <span class="text-[10px] font-bold text-slate-400 mb-0.5 px-1">${msg.nickname}</span>
-          <div class="speech-bubble ${isMe ? 'speech-bubble-right' : 'speech-bubble-left'}">
-            <p class="text-xs break-words">${msg.content}</p>
-            <div class="chat-file-container mt-1"></div>
+    const unsubChat = DB.listenChatMessages(id, (messages) => {
+      if (!chatContainer) return;
+      chatContainer.innerHTML = '';
+      if (messages.length === 0) {
+        chatContainer.innerHTML = `
+          <div class="text-center py-8 text-slate-400 text-[10px] font-semibold uppercase tracking-wider leading-relaxed max-w-xs mx-auto">
+            👋 Start of conversation. Send a message to get study buddies going!
           </div>
-          <span class="text-[9px] text-slate-400 mt-0.5 px-1">${formatTime(msg.timestamp)}</span>
-        </div>
-      `;
-
-      bubbleWrap.innerHTML = isMe ? `${speechBubble}${avatarBox}` : `${avatarBox}${speechBubble}`;
-
-      if (msg.file) {
-        const fileContainer = bubbleWrap.querySelector('.chat-file-container');
-        if (fileContainer) {
-          fileContainer.appendChild(renderFileAttachment(msg.file, isMe));
-        }
+        `;
+        return;
       }
 
-      chatContainer.appendChild(bubbleWrap);
+      messages.forEach(msg => {
+        const isMe = currentUser && msg.nickname === currentUser.nickname;
+        const bubbleWrap = document.createElement('div');
+        bubbleWrap.className = `flex gap-2.5 max-w-full ${isMe ? 'flex-row-reverse self-end' : 'self-start'}`;
+
+        const avatarBox = renderAvatarHTML(msg.avatar, 'avatar-circle-sm self-end shadow-sm bg-white');
+        
+        const speechBubble = `
+          <div class="flex flex-col ${isMe ? 'items-end' : 'items-start'}">
+            <span class="text-[10px] font-bold text-slate-400 mb-0.5 px-1">${msg.nickname}</span>
+            <div class="speech-bubble ${isMe ? 'speech-bubble-right' : 'speech-bubble-left'}">
+              <p class="text-xs break-words">${msg.content}</p>
+              <div class="chat-file-container mt-1"></div>
+            </div>
+            <span class="text-[9px] text-slate-400 mt-0.5 px-1">${formatTime(msg.timestamp)}</span>
+          </div>
+        `;
+
+        bubbleWrap.innerHTML = isMe ? `${speechBubble}${avatarBox}` : `${avatarBox}${speechBubble}`;
+
+        if (msg.file) {
+          const fileContainer = bubbleWrap.querySelector('.chat-file-container');
+          if (fileContainer) {
+            fileContainer.appendChild(renderFileAttachment(msg.file, isMe));
+          }
+        }
+
+        chatContainer.appendChild(bubbleWrap);
+      });
+
+      // Auto scroll chat to bottom
+      chatContainer.scrollTop = chatContainer.scrollHeight;
     });
 
-    // Auto scroll chat to bottom
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-  });
-
-  // Init mission board
-  const taskContainer = document.getElementById('missions-container');
-  taskContainer.innerHTML = `
-    <div class="text-center py-6 text-slate-400 text-xs font-semibold">
-      Syncing board...
-    </div>
-  `;
-
-  const unsubTasks = DB.listenTasks(id, (tasks) => {
-    taskContainer.innerHTML = '';
-    if (tasks.length === 0) {
+    // Init mission board
+    const taskContainer = document.getElementById('missions-container');
+    if (taskContainer) {
       taskContainer.innerHTML = `
-        <div class="text-center py-8 text-slate-400 text-xs font-medium">
-          🎯 No active missions. Add a task/goal below to track group progress!
+        <div class="text-center py-6 text-slate-400 text-xs font-semibold">
+          Syncing board...
         </div>
       `;
-      return;
     }
 
-    tasks.forEach(task => {
-      const item = document.createElement('div');
-      item.className = `cartoon-box p-2.5 border border-slate-200 flex items-center justify-between gap-3 animate-pop rounded-lg ${task.completed ? 'bg-slate-50/80 opacity-70' : 'bg-white'}`;
-      
-      // Determine badge color
-      let badgeClass = 'bg-purple-50 text-purple-600 border-purple-100';
-      if (task.type.includes('📚')) badgeClass = 'bg-sky-50 text-sky-600 border-sky-100';
-      if (task.type.includes('📝')) badgeClass = 'bg-rose-50 text-rose-600 border-rose-100';
-      if (task.type.includes('📅')) badgeClass = 'bg-orange-50 text-orange-600 border-orange-100';
-
-      const completedSubtext = task.completed 
-        ? `<span class="text-[10px] font-semibold text-emerald-600 block leading-tight mt-0.5">Completed by ${task.completedBy || 'Student'} ✓</span>` 
-        : `<span class="text-[10px] text-slate-400 block leading-tight mt-0.5">Due: ${task.dueDate}</span>`;
-
-      item.innerHTML = `
-        <div class="flex items-center gap-3 overflow-hidden">
-          <!-- Checkbox -->
-          <div class="task-check cartoon-checkbox shrink-0 ${task.completed ? 'checked' : ''}" data-task-id="${task.id}" data-checked="${task.completed}"></div>
-          <div class="overflow-hidden">
-            <span class="text-[10px] px-2 py-0.5 rounded-full font-semibold border ${badgeClass} inline-block leading-none mb-1">${task.type}</span>
-            <h4 class="font-bold text-xs text-slate-700 truncate ${task.completed ? 'line-through text-slate-400' : ''}">${task.title}</h4>
-            ${completedSubtext}
+    const unsubTasks = DB.listenTasks(id, (tasks) => {
+      if (!taskContainer) return;
+      taskContainer.innerHTML = '';
+      if (tasks.length === 0) {
+        taskContainer.innerHTML = `
+          <div class="text-center py-8 text-slate-400 text-xs font-semibold">
+            🎯 No active missions. Add a task/goal below to track group progress!
           </div>
-        </div>
-      `;
+        `;
+        return;
+      }
 
-      taskContainer.appendChild(item);
-    });
-
-    // Checkbox click bindings
-    taskContainer.querySelectorAll('.task-check').forEach(box => {
-      box.addEventListener('click', async (e) => {
-        const target = e.currentTarget;
-        const taskId = target.getAttribute('data-task-id');
-        const currentCompleted = target.getAttribute('data-checked') === 'true';
+      tasks.forEach(task => {
+        const item = document.createElement('div');
+        item.className = `cartoon-box p-2.5 border border-slate-200 flex items-center justify-between gap-3 animate-pop rounded-lg ${task.completed ? 'bg-slate-50/80 opacity-70' : 'bg-white'}`;
         
-        target.style.pointerEvents = 'none'; // prevent rapid clicks
-        try {
-          await DB.toggleTask(id, taskId, !currentCompleted, currentUser.nickname);
-          showToast('🎯', !currentCompleted ? 'Mission complete!' : 'Mission updated.');
-        } catch (error) {
-          console.error(error);
-        }
+        // Determine badge color
+        let badgeClass = 'bg-purple-50 text-purple-600 border-purple-100';
+        if (task.type.includes('📚')) badgeClass = 'bg-sky-50 text-sky-600 border-sky-100';
+        if (task.type.includes('📝')) badgeClass = 'bg-rose-50 text-rose-600 border-rose-100';
+        if (task.type.includes('📅')) badgeClass = 'bg-orange-50 text-orange-600 border-orange-100';
+
+        const completedSubtext = task.completed 
+          ? `<span class="text-[10px] font-semibold text-emerald-600 block leading-tight mt-0.5">Completed by ${task.completedBy || 'Student'} ✓</span>` 
+          : `<span class="text-[10px] text-slate-400 block leading-tight mt-0.5">Due: ${task.dueDate}</span>`;
+
+        item.innerHTML = `
+          <div class="flex items-center gap-3 overflow-hidden">
+            <!-- Checkbox -->
+            <div class="task-check cartoon-checkbox shrink-0 ${task.completed ? 'checked' : ''}" data-task-id="${task.id}" data-checked="${task.completed}"></div>
+            <div class="overflow-hidden">
+              <span class="text-[10px] px-2 py-0.5 rounded-full font-semibold border ${badgeClass} inline-block leading-none mb-1">${task.type}</span>
+              <h4 class="font-bold text-xs text-slate-700 truncate ${task.completed ? 'line-through text-slate-400' : ''}">${task.title}</h4>
+              ${completedSubtext}
+            </div>
+          </div>
+        `;
+
+        taskContainer.appendChild(item);
+      });
+
+      // Checkbox click bindings
+      taskContainer.querySelectorAll('.task-check').forEach(box => {
+        box.addEventListener('click', async (e) => {
+          const target = e.currentTarget;
+          const taskId = target.getAttribute('data-task-id');
+          const currentCompleted = target.getAttribute('data-checked') === 'true';
+          
+          target.style.pointerEvents = 'none'; // prevent rapid clicks
+          try {
+            await DB.toggleTask(id, taskId, !currentCompleted, currentUser ? currentUser.nickname : 'Guest');
+            showToast('🎯', !currentCompleted ? 'Mission complete!' : 'Mission updated.');
+          } catch (error) {
+            console.error(error);
+          }
+        });
       });
     });
-  });
 
-  activeUnsubscribes.push(unsubChat, unsubTasks);
+    activeUnsubscribes.push(unsubChat, unsubTasks);
+  } catch (err) {
+    console.error("Diagnostic error inside openCommunity:", err);
+    showToast('❌ UI Error', err.message);
+  }
 }
 
 // ==========================================
@@ -1136,7 +1156,16 @@ function leaveCommunity() {
 // EVENT LISTENERS & DOM EVENT ROUTING
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
-
+  // Global error diagnostic tracking for UI/UX debugging
+  window.addEventListener('error', (e) => {
+    showToast('❌ Error', e.message || 'An unexpected error occurred.');
+    console.error("Diagnostic error:", e);
+  });
+  window.addEventListener('unhandledrejection', (e) => {
+    const reason = e.reason ? (e.reason.message || e.reason) : 'A database promise rejected.';
+    showToast('❌ DB Rejection', reason);
+    console.error("Diagnostic rejection:", e);
+  });
 
   // Profile auth triggers
   checkUserProfile();
